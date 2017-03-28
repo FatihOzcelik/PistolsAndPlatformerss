@@ -18,8 +18,7 @@ public class Installer extends ModuleInstall {
     public void restored() {
 
         g = new Game();
-        com.badlogic.gdx.
-
+        
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "Asteroids";
         cfg.width = 800;
