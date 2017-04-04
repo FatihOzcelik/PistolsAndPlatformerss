@@ -12,8 +12,8 @@ import java.io.Serializable;
  *
  * @author fatihozcelik
  */
-public class Entity implements Serializable{
-    
+public class Entity implements Serializable {
+
     private final UUID ID = UUID.randomUUID();
     private float positionX;
     private float positionY;
@@ -24,6 +24,8 @@ public class Entity implements Serializable{
     private float deacceleration;
     private boolean direction;
     private int health;
+    private float[] shapeX = new float[4];
+    private float[] shapeY = new float[4];
 
     public Entity(float positionX, float positionY, float maxSpeed, float acceleration, float deacceleration, boolean direction, int health) {
         this.positionX = positionX;
@@ -112,6 +114,21 @@ public class Entity implements Serializable{
     public boolean isDirection() {
         return direction;
     }
-    
-    
+
+    public float[] getShapeX() {
+        return shapeX;
+    }
+
+    public void setShapeX(float[] shapeX) {
+        this.shapeX = shapeX;
+    }
+
+    public float[] getShapeY() {
+        return shapeY;
+    }
+
+    public void setShapeY(float[] shapeY) {
+        this.shapeY = shapeY;
+    }
+
 }
