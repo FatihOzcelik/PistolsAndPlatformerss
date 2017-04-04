@@ -17,6 +17,8 @@ public class Entity implements Serializable{
     private final UUID ID = UUID.randomUUID();
     private float positionX;
     private float positionY;
+    private float deltaX;
+    private float deltaY;
     private float maxSpeed;
     private float acceleration;
     private float deacceleration;
@@ -31,6 +33,22 @@ public class Entity implements Serializable{
         this.deacceleration = deacceleration;
         this.direction = direction;
         this.health = health;
+    }
+
+    public float getDeltaX() {
+        return deltaX;
+    }
+
+    public float getDeltaY() {
+        return deltaY;
+    }
+
+    public void setDeltaX(float deltaX) {
+        this.deltaX = deltaX;
+    }
+
+    public void setDeltaY(float deltaY) {
+        this.deltaY = deltaY;
     }
 
     public String getID() {
