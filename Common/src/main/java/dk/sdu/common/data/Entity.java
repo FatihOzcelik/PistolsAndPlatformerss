@@ -33,6 +33,8 @@ public class Entity implements Serializable{
         this.deacceleration = deacceleration;
         this.direction = direction;
         this.health = health;
+        deltaX = positionX + acceleration;
+        deltaY = positionY;
     }
 
     public float getDeltaX() {
