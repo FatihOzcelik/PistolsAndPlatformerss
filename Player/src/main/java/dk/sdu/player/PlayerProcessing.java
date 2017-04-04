@@ -5,10 +5,19 @@
  */
 package dk.sdu.player;
 
+import dk.sdu.common.data.GameData;
+import dk.sdu.common.data.World;
+import dk.sdu.common.services.IProcessingService;
+
 /**
  *
  * @author fatihozcelik
  */
-public class PlayerProcessing {
+public class PlayerProcessing implements IProcessingService{
+
+    @Override
+    public void process(GameData gameData, World world) {
+        
+    }
     
 }

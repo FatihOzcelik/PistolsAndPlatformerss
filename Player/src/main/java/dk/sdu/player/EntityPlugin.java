@@ -5,10 +5,28 @@
  */
 package dk.sdu.player;
 
+import dk.sdu.common.data.GameData;
+import dk.sdu.common.data.World;
+import dk.sdu.common.services.IPluginService;
+import dk.sdu.common.data.Entity;
+
 /**
  *
  * @author fatihozcelik
  */
-public class EntityPlugin {
+public class EntityPlugin implements IPluginService{
+
+    Entity player;
+    
+    @Override
+    public void start(GameData gameData, World world) {
+        player = new Entity(10, 10, 20, 5, 2, true, 100);
+        world.addEntity(player);
+    }
+
+    @Override
+    public void stop(GameData gameData, World world) {
+        world.removeEntity(player.getID());
+    }
     
 }
