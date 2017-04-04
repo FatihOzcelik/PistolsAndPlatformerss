@@ -10,6 +10,7 @@ import dk.sdu.common.data.GameData;
 import static dk.sdu.common.data.GameKeys.*;
 import dk.sdu.common.data.World;
 import dk.sdu.common.services.IProcessingService;
+import static java.lang.Math.abs;
 
 /**
  *
@@ -20,7 +21,7 @@ public class PlayerProcessing implements IProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity entity : world.getEntities()) {
-            if (entity.getType().equals(PLAYER)) {
+            //if (entity.getType().equals(PLAYER)) {
                 float x = entity.getPositionX();
                 float y = entity.getPositionY();
                 float dt = gameData.getDelta();
@@ -29,36 +30,40 @@ public class PlayerProcessing implements IProcessingService {
                 float acceleration = entity.getAcceleration();
                 float deceleration = entity.getDeacceleration();
                 float maxSpeed = entity.getMaxSpeed();
+                float dX = entity.getDeltaX();
+                float dY = entity.getDeltaY();
 //                float radians = entity.getRadians();
 //                float rotationSpeed = entity.getRotationSpeed();
 
-                // turning
+                // Walking left
                 if (gameData.getKeys().isDown(LEFT)) {
-                    radians += rotationSpeed * dt;
+                    if(abs(x-dX)/dt > maxSpeed){
+                        dX = (acceleration * dt) - x;
+                    } else {
+                        dX = (maxSpeed * dt) - x;
+                    }
                 }
-
+                
+                // Walking right
                 if (gameData.getKeys().isDown(RIGHT)) {
-                    radians -= rotationSpeed * dt;
+                    if(abs(x-dX)/dt > maxSpeed){
+                        dX = acceleration * dt + x;
+                    } else {
+                        dX = maxSpeed * dt + x;
+                    }
                 }
 
-                // accelerating            
+                // Jump           
                 if (gameData.getKeys().isDown(UP)) {
-                    dx += cos(radians) * acceleration * dt;
-                    dy += sin(radians) * acceleration * dt;
+                    
+                }
+                
+                // Duck           
+                if (gameData.getKeys().isDown(DOWN)) {
+                    
                 }
 
-                // deceleration
-                float vec = (float) sqrt(dx * dx + dy * dy);
-                if (vec > 0) {
-                    dx -= (dx / vec) * deceleration * dt;
-                    dy -= (dy / vec) * deceleration * dt;
-                }
-                if (vec > maxSpeed) {
-                    dx = (dx / vec) * maxSpeed;
-                    dy = (dy / vec) * maxSpeed;
-                }
-
-            }
+            //}
 
         }
     }

@@ -31,6 +31,7 @@ public class Game implements ApplicationListener {
         
         sr = new ShapeRenderer();
         
+        
     }
 
     @Override
