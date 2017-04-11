@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="40" tilewidth="16" tileheight="16" nextobjectid="1">
  <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" spacing="1" margin="1" tilecount="1456" columns="52">
-  <image source="../Downloads/Jungle_terrain.png" width="896" height="480"/>
+  <image source="Jungle_terrain.png" width="896" height="480"/>
  </tileset>
  <tileset firstgid="1457" name="tiled2" tilewidth="16" tileheight="16" spacing="1" margin="1" tilecount="2430" columns="45">
-  <image source="../Downloads/Jungle_guide.png" width="768" height="928"/>
+  <image source="Jungle_guide.png" width="768" height="928"/>
  </tileset>
  <tileset firstgid="3887" name="tiled3Sky" tilewidth="16" tileheight="16" spacing="1" margin="1" tilecount="7320" columns="120">
   <image source="Sprites.png" width="2044" height="1044"/>
- </tileset>
- <tileset firstgid="11207" name="Jungle_guide" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="644" columns="23">
-  <image source="../Downloads/Jungle_guide.png" width="768" height="928"/>
  </tileset>
  <layer name="Backgrpund" width="50" height="40">
   <data encoding="csv">

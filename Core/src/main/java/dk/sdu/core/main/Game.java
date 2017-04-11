@@ -41,7 +41,7 @@ public class Game implements ApplicationListener {
     private final GameData gameData = new GameData();
     private List<IPluginService> gamePlugins = new CopyOnWriteArrayList<>();
     private TiledMap map;
-    private OrthogonalTiledMapRenderer renderer;
+    private OrthogonalTiledMapRenderer tiledMapRenderer;
 
     @Override
     public void create() {
@@ -62,12 +62,17 @@ public class Game implements ApplicationListener {
         }
         
         TmxMapLoader loader = new TmxMapLoader();
-        map = loader.load("resources/dk/sdu/core/assets/PistolsAndPlatformersMap.tmx");
-
+        map = loader.load("C:\\Users\\Frank Sebastian\\Documents\\NetBeansProjects\\PistolsAndPlatformerss\\Core\\src\\main\\resources\\dk\\sdu\\core\\assets\\PistolsAndPlatformersMap.tmx");
+        
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
+       
     }
 
     @Override
-    public void resize(int i, int i1) {
+    public void resize(int width, int height) {
+        cam.viewportWidth = width;
+        cam.viewportHeight = height;
+        cam.update();
     }
 
     private void update() {
@@ -87,7 +92,10 @@ public class Game implements ApplicationListener {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         gameData.setDelta(Gdx.graphics.getDeltaTime());
         gameData.getKeys().update();
+        
+        tiledMapRenderer.setView(cam);
 
+        tiledMapRenderer.render();
         update();
         draw();
     }
@@ -122,6 +130,8 @@ public class Game implements ApplicationListener {
 
     @Override
     public void dispose() {
+        map.dispose();
+        tiledMapRenderer.dispose();
     }
 
     private final LookupListener lookupListener = new LookupListener() {
