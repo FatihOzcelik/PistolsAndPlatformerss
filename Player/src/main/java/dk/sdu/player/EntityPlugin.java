@@ -9,18 +9,21 @@ import dk.sdu.common.data.GameData;
 import dk.sdu.common.data.World;
 import dk.sdu.common.services.IPluginService;
 import dk.sdu.common.data.Entity;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author fatihozcelik
  */
+
+@ServiceProvider(service = IPluginService.class)
 public class EntityPlugin implements IPluginService{
 
     Entity player;
     
     @Override
     public void start(GameData gameData, World world) {
-        player = new Entity(10, 10, 20, 5, 2, true, 100);
+        player = new Entity(10, 10, 100, 20, 2, true, 100);
         world.addEntity(player);
     }
 

@@ -11,20 +11,25 @@ import static dk.sdu.common.data.GameKeys.*;
 import dk.sdu.common.data.World;
 import dk.sdu.common.services.IProcessingService;
 import static java.lang.Math.abs;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author fatihozcelik
  */
+
+@ServiceProvider(service = IProcessingService.class)
 public class PlayerProcessing implements IProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-        for (Entity entity : world.getEntities(Player.class)) {
+        for (Entity entity : world.getEntities()) {
             //if (entity.getType().equals(PLAYER)) {
             float x = entity.getPositionX();
             float y = entity.getPositionY();
             float dt = gameData.getDelta();
+
+            
 //                float dx = entity.getDx();
 //                float dy = entity.getDy();
             float acceleration = entity.getAcceleration();
@@ -38,9 +43,9 @@ public class PlayerProcessing implements IProcessingService {
             // Walking left
             if (gameData.getKeys().isDown(LEFT)) {
                 if (abs(x - dX) / dt > maxSpeed) {
-                    dX = (acceleration * dt) - x;
+                    dX = x - (acceleration * dt);
                 } else {
-                    dX = (maxSpeed * dt) - x;
+                    dX = x - (maxSpeed * dt);
                 }
             }
 
@@ -64,11 +69,17 @@ public class PlayerProcessing implements IProcessingService {
             }
 
             //}
-            
             // Set position:
-            x += dX * dt;
-            y += dY * dt;
+            x = dX;
+            y = dY;
 
+            //update entity
+            entity.setPositionX(x);
+            entity.setPositionY(y);
+            entity.setDeltaX(dX);
+            entity.setDeltaY(dY);
+            
+            
             updateShape(entity);
         }
     }
