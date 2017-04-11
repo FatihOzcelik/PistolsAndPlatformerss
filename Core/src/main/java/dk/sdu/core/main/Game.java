@@ -10,6 +10,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import org.openide.util.Lookup;
 import dk.sdu.common.data.Entity;
 import dk.sdu.common.data.GameData;
@@ -37,11 +40,13 @@ public class Game implements ApplicationListener {
     private Lookup.Result<IPluginService> result;
     private final GameData gameData = new GameData();
     private List<IPluginService> gamePlugins = new CopyOnWriteArrayList<>();
+    private TiledMap map;
+    private OrthogonalTiledMapRenderer renderer;
 
     @Override
     public void create() {
         cam = new OrthographicCamera(800, 600);
-        cam.translate(800 / 2, 600 / 2);
+       cam.translate(800 / 2, 600 / 2);
         cam.update();
 
         sr = new ShapeRenderer();
@@ -55,6 +60,9 @@ public class Game implements ApplicationListener {
         for (Lookup.Item<IPluginService> plugin : result.allItems()) {
             plugin.getInstance().start(gameData, world);
         }
+        
+        TmxMapLoader loader = new TmxMapLoader();
+        map = loader.load("resources/dk/sdu/core/assets/PistolsAndPlatformersMap.tmx");
 
     }
 
