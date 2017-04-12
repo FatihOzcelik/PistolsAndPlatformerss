@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dk.sdu.common.data;
 
 import java.util.UUID;
@@ -26,6 +21,7 @@ public class Entity implements Serializable {
     private int health;
     private float[] shapeX = new float[4];
     private float[] shapeY = new float[4];
+    private String sprite;
 
     public Entity(float positionX, float positionY, float maxSpeed, float acceleration, float deacceleration, boolean direction, int health) {
         this.positionX = positionX;
@@ -55,8 +51,12 @@ public class Entity implements Serializable {
         this.deltaY = deltaY;
     }
 
-    public String getID() {
-        return ID.toString();
+//    public String getID() {
+//        return ID.toString();
+//    }
+    
+    public UUID getID() {
+        return this.ID;
     }
 
     public void setHealth(int health) {
@@ -131,4 +131,11 @@ public class Entity implements Serializable {
         this.shapeY = shapeY;
     }
 
+    public void setSprite(String sprite) {
+        this.sprite = sprite;
+    }
+
+    public String getSprite() {
+        return sprite;
+    }
 }

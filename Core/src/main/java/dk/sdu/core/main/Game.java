@@ -1,19 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dk.sdu.core.main;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import org.openide.util.Lookup;
 import dk.sdu.common.data.Entity;
 import dk.sdu.common.data.GameData;
 import dk.sdu.common.data.World;
@@ -43,10 +39,12 @@ public class Game implements ApplicationListener {
     private TiledMap map;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
 
+    SpriteBatch batch;
+
     @Override
     public void create() {
         cam = new OrthographicCamera(800, 600);
-       cam.translate(800 / 2, 600 / 2);
+        cam.translate(800 / 2, 600 / 2);
         cam.update();
 
         sr = new ShapeRenderer();
@@ -60,12 +58,17 @@ public class Game implements ApplicationListener {
         for (Lookup.Item<IPluginService> plugin : result.allItems()) {
             plugin.getInstance().start(gameData, world);
         }
-        
+
         TmxMapLoader loader = new TmxMapLoader();
-        map = loader.load("C:\\Users\\Frank Sebastian\\Documents\\NetBeansProjects\\PistolsAndPlatformerss\\Core\\src\\main\\resources\\dk\\sdu\\core\\assets\\PistolsAndPlatformersMap.tmx");
-        
+
+//      map = loader.load("C:\\Users\\Frank Sebastian\\Documents\\NetBeansProjects\\PistolsAndPlatformerss\\Core\\src\\main\\resources\\dk\\sdu\\core\\assets\\PistolsAndPlatformersMap.tmx");
+//      map = loader.load("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/PistolsAndPlatformersMap.tmx");
+
+        map = loader.load("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/PistolsAndPlatformersMap.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
-       
+
+        batch = new SpriteBatch();
+
     }
 
     @Override
@@ -92,7 +95,7 @@ public class Game implements ApplicationListener {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         gameData.setDelta(Gdx.graphics.getDeltaTime());
         gameData.getKeys().update();
-        
+
         tiledMapRenderer.setView(cam);
 
         tiledMapRenderer.render();
@@ -100,24 +103,42 @@ public class Game implements ApplicationListener {
         draw();
     }
 
+    private Sprites makeSprite(Entity e) {
+        Sprites sprites = new Sprites(new Texture(e.getSprite()), e.getID());
+        sprites.setX(e.getPositionX());
+        sprites.setY(e.getPositionY());
+
+        return sprites;
+    }
+
     private void draw() {
+        Sprites sprites = null;
+        batch.begin();
+
         for (Entity entity : world.getEntities()) {
-            sr.setColor(1, 1, 1, 1);
-
-            sr.begin(ShapeRenderer.ShapeType.Line);
-
-            float[] shapex = entity.getShapeX();
-            float[] shapey = entity.getShapeY();
-
-            for (int i = 0, j = shapex.length - 1;
-                    i < shapex.length;
-                    j = i++) {
-
-                sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
-            }
-
-            sr.end();
+            sprites = makeSprite(entity);
         }
+
+        sprites.draw(batch);
+        batch.end();
+
+//        for (Entity entity : world.getEntities()) {
+//            sr.setColor(1, 1, 1, 1);
+//
+//            sr.begin(ShapeRenderer.ShapeType.Line);
+//
+//            float[] shapex = entity.getShapeX();
+//            float[] shapey = entity.getShapeY();
+//
+//            for (int i = 0, j = shapex.length - 1;
+//                    i < shapex.length;
+//                    j = i++) {
+//
+//                sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
+//            }
+//
+//            sr.end();
+//        }
     }
 
     @Override

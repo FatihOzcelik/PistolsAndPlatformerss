@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dk.sdu.player;
 
 import dk.sdu.common.data.GameData;
@@ -23,13 +18,14 @@ public class EntityPlugin implements IPluginService{
     
     @Override
     public void start(GameData gameData, World world) {
-        player = new Entity(10, 10, 100, 20, 2, true, 100);
+        player = new Entity(10, 100, 100, 20, 2, true, 100);
+        player.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/player.png");
         world.addEntity(player);
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeEntity(player.getID());
+        world.removeEntity(player.getID().toString());
     }
     
 }

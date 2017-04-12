@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dk.sdu.common.data;
 
 /**
@@ -25,8 +20,8 @@ public class World {
     private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
 
     public String addEntity(Entity entity) {
-        entityMap.put(entity.getID(), entity);
-        return entity.getID();
+        entityMap.put(entity.getID().toString(), entity);
+        return entity.getID().toString();
     }
 
     public void removeEntity(String entityID) {
@@ -34,7 +29,7 @@ public class World {
     }
 
     public void removeEntity(Entity entity) {
-        entityMap.remove(entity.getID());
+        entityMap.remove(entity.getID().toString());
     }
     
     public Collection<Entity> getEntities() {
