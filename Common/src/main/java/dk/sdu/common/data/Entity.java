@@ -22,6 +22,8 @@ public class Entity implements Serializable {
     private float[] shapeX = new float[4];
     private float[] shapeY = new float[4];
     private String sprite;
+    private boolean collisionX;
+    private boolean collisionY;
 
     public Entity(float positionX, float positionY, float maxSpeed, float acceleration, float deacceleration, boolean direction, int health) {
         this.positionX = positionX;
@@ -33,6 +35,22 @@ public class Entity implements Serializable {
         this.health = health;
         deltaX = positionX + acceleration;
         deltaY = positionY;
+    }
+
+    public boolean isCollisionX() {
+        return collisionX;
+    }
+
+    public boolean isCollisionY() {
+        return collisionY;
+    }
+    
+    public void setCollisionX(boolean collisionX) {
+        this.collisionX = collisionX;
+    }
+
+    public void setCollisionY(boolean collisionY) {
+        this.collisionY = collisionY;
     }
 
     public float getDeltaX() {

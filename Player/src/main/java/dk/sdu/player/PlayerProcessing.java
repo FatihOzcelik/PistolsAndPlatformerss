@@ -4,6 +4,7 @@ import dk.sdu.common.data.Entity;
 import dk.sdu.common.data.GameData;
 import static dk.sdu.common.data.GameKeys.*;
 import dk.sdu.common.data.World;
+import dk.sdu.common.data.Collision;
 import dk.sdu.common.services.IProcessingService;
 import static java.lang.Math.abs;
 import org.openide.util.lookup.ServiceProvider;
@@ -12,9 +13,10 @@ import org.openide.util.lookup.ServiceProvider;
  *
  * @author fatihozcelik
  */
-
 @ServiceProvider(service = IProcessingService.class)
 public class PlayerProcessing implements IProcessingService {
+
+    Collision collisionDetection = new Collision();
 
     @Override
     public void process(GameData gameData, World world) {
@@ -24,7 +26,6 @@ public class PlayerProcessing implements IProcessingService {
             float y = entity.getPositionY();
             float dt = gameData.getDelta();
 
-            
 //                float dx = entity.getDx();
 //                float dy = entity.getDy();
             float acceleration = entity.getAcceleration();
@@ -52,7 +53,8 @@ public class PlayerProcessing implements IProcessingService {
                     dX = maxSpeed * dt + x;
                 }
             }
-
+            
+            
             // Jump           
             if (gameData.getKeys().isDown(UP)) {
 
@@ -62,6 +64,30 @@ public class PlayerProcessing implements IProcessingService {
             if (gameData.getKeys().isDown(DOWN)) {
 
             }
+            
+            //save the local delta position
+            entity.setDeltaX(dX);
+            entity.setDeltaY(dY);
+            
+            //check if this entity colides with the map
+            collisionDetection.mapCollision(entity);
+            
+            
+            //save collision test results
+            boolean collisionX = entity.isCollisionX();
+            boolean collisionY = entity.isCollisionY();
+            
+
+            // react to x collision by not moving x
+            if (collisionX) {
+                dX = x;
+            }
+            // react to y collision by not moving y
+            if (collisionY) {
+                dY = y;
+            }
+            
+            
 
             //}
             // Set position:
@@ -74,7 +100,7 @@ public class PlayerProcessing implements IProcessingService {
             entity.setDeltaX(dX);
             entity.setDeltaY(dY);
             
-            
+
 //            updateShape(entity);
         }
     }
