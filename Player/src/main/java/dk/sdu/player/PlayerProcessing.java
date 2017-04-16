@@ -17,6 +17,7 @@ import org.openide.util.lookup.ServiceProvider;
 public class PlayerProcessing implements IProcessingService {
 
     Collision collisionDetection = new Collision();
+    private boolean canJump;
 
     @Override
     public void process(GameData gameData, World world) {
@@ -25,16 +26,12 @@ public class PlayerProcessing implements IProcessingService {
             float x = entity.getPositionX();
             float y = entity.getPositionY();
             float dt = gameData.getDelta();
-
-//                float dx = entity.getDx();
-//                float dy = entity.getDy();
             float acceleration = entity.getAcceleration();
             float deceleration = entity.getDeacceleration();
             float maxSpeed = entity.getMaxSpeed();
             float dX = entity.getDeltaX();
             float dY = entity.getDeltaY();
-//                float radians = entity.getRadians();
-//                float rotationSpeed = entity.getRotationSpeed();
+            float jumpSpeed = 150;
 
             // Walking left
             if (gameData.getKeys().isDown(LEFT)) {
@@ -58,8 +55,11 @@ public class PlayerProcessing implements IProcessingService {
             dY = dY -1;
             
             // Jump           
-            if (gameData.getKeys().isDown(UP)) {
-
+            if (gameData.getKeys().isDown(UP)) {     
+                if(canJump){
+                    dY = jumpSpeed;
+                    canJump = false;
+                }
             }
 
             // Duck           
@@ -87,11 +87,9 @@ public class PlayerProcessing implements IProcessingService {
             // react to y collision by not moving y
             if (collisionY) {
                 dY = y;
-            }
-            
-            
+                canJump = collisionY;
+            }            
 
-            //}
             // Set position:
             x = dX;
             y = dY;
