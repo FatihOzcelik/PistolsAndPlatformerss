@@ -54,6 +54,8 @@ public class PlayerProcessing implements IProcessingService {
                 }
             }
             
+            //gravity
+            dY = dY -1;
             
             // Jump           
             if (gameData.getKeys().isDown(UP)) {
