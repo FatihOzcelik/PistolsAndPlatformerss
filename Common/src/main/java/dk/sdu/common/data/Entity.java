@@ -10,15 +10,15 @@ import java.io.Serializable;
 public class Entity implements Serializable {
 
     private final UUID ID = UUID.randomUUID();
-    public float positionX;
-    public float positionY;
+    private float positionX;
+    private float positionY;
     private float deltaX;
     private float deltaY;
-    public float maxSpeed;
-    public float acceleration;
-    public float deacceleration;
+    private float maxSpeed;
+    private float acceleration;
+    private float deacceleration;
     private boolean direction;
-    public int health;
+    private int health;
     private float[] shapeX = new float[4];
     private float[] shapeY = new float[4];
     private String sprite;
