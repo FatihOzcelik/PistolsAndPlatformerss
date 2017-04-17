@@ -27,11 +27,15 @@ public class Enemy  {
     public void update(){
         
     }
-   
+    
+    public void draw(Graphics2D g2d){
+        g2d.drawImage(getEnemyImg, positionX, positionY);
+        
+    }
     
     public Image getEnemyImg(){
        ImageIcon ic = new ImageIcon("\\Users\\Frank Sebastian\\Documents\\NetBeansProjects\\PistolsAndPlatformerss\\Core\\target\\classes\\dk\\sdu\\core\\assets\\enemy.png");
        return ic.getImage();
     }
-      
+     
 }

@@ -14,8 +14,7 @@ import org.openide.util.lookup.ServiceProvider;
 public class EntityPlugin implements IPluginService {
 
     Entity player;
-    Entity Enemy;
-    
+
     @Override
     public void start(GameData gameData, World world) {
         
