@@ -24,6 +24,15 @@ public class Entity implements Serializable {
     private String sprite;
     private boolean collisionX;
     private boolean collisionY;
+    private EntityType type;
+
+    public void setType(EntityType type) {
+        this.type = type;
+    }
+
+    public EntityType getType() {
+        return type;
+    }
 
     public Entity(float positionX, float positionY, float maxSpeed, float acceleration, float deacceleration, boolean direction, int health) {
         this.positionX = positionX;

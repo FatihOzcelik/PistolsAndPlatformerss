@@ -61,10 +61,10 @@ public class Game implements ApplicationListener {
 
         TmxMapLoader loader = new TmxMapLoader();
 
-//      map = loader.load("C:\\Users\\Frank Sebastian\\Documents\\NetBeansProjects\\PistolsAndPlatformerss\\Core\\src\\main\\resources\\dk\\sdu\\core\\assets\\PistolsAndPlatformersMap.tmx");
+      map = loader.load("\\Users\\Frank Sebastian\\Documents\\NetBeansProjects\\PistolsAndPlatformerss\\Core\\src\\main\\resources\\dk\\sdu\\core\\assets\\PistolsAndPlatformersMap.tmx");
 //      map = loader.load("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/PistolsAndPlatformersMap.tmx");
 
-        map = loader.load("/Users/Arian/Desktop/skole/Objekt/code/PistolsAndPlatformerss/Core/target/classes/dk/sdu/core/assets/PistolsAndPlatformersMap.tmx");
+       // map = loader.load("/Users/Arian/Desktop/skole/Objekt/code/PistolsAndPlatformerss/Core/target/classes/dk/sdu/core/assets/PistolsAndPlatformersMap.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 
         batch = new SpriteBatch();
@@ -117,9 +117,16 @@ public class Game implements ApplicationListener {
 
         for (Entity entity : world.getEntities()) {
             sprites = makeSprite(entity);
+            
+            if(entity.isDirection()){
+                sprites.flip(false, false);
+            } else {
+                sprites.flip(true, false);
+            } 
+            sprites.draw(batch);
         }
 
-        sprites.draw(batch);
+       
         batch.end();
 
 //        for (Entity entity : world.getEntities()) {
