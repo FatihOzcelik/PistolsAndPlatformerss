@@ -61,10 +61,10 @@ public class Game implements ApplicationListener {
 
         TmxMapLoader loader = new TmxMapLoader();
 
-      map = loader.load("\\Users\\Frank Sebastian\\Documents\\NetBeansProjects\\PistolsAndPlatformerss\\Core\\src\\main\\resources\\dk\\sdu\\core\\assets\\PistolsAndPlatformersMap.tmx");
-//      map = loader.load("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/PistolsAndPlatformersMap.tmx");
+//      map = loader.load("\\Users\\Frank Sebastian\\Documents\\NetBeansProjects\\PistolsAndPlatformerss\\Core\\src\\main\\resources\\dk\\sdu\\core\\assets\\PistolsAndPlatformersMap.tmx");
+        map = loader.load("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/PistolsAndPlatformersMap.tmx");
 
-       // map = loader.load("/Users/Arian/Desktop/skole/Objekt/code/PistolsAndPlatformerss/Core/target/classes/dk/sdu/core/assets/PistolsAndPlatformersMap.tmx");
+        // map = loader.load("/Users/Arian/Desktop/skole/Objekt/code/PistolsAndPlatformerss/Core/target/classes/dk/sdu/core/assets/PistolsAndPlatformersMap.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 
         batch = new SpriteBatch();
@@ -116,36 +116,17 @@ public class Game implements ApplicationListener {
         batch.begin();
 
         for (Entity entity : world.getEntities()) {
-            sprites = makeSprite(entity);
-            
+                sprites = makeSprite(entity);
+
             if(entity.isDirection()){
-                sprites.flip(false, false);
-            } else {
-                sprites.flip(true, false);
-            } 
-            sprites.draw(batch);
+                    sprites.flip(false, false);
+                } else {
+                    sprites.flip(true, false);
+                }
+                sprites.draw(batch);
         }
 
-       
         batch.end();
-
-//        for (Entity entity : world.getEntities()) {
-//            sr.setColor(1, 1, 1, 1);
-//
-//            sr.begin(ShapeRenderer.ShapeType.Line);
-//
-//            float[] shapex = entity.getShapeX();
-//            float[] shapey = entity.getShapeY();
-//
-//            for (int i = 0, j = shapex.length - 1;
-//                    i < shapex.length;
-//                    j = i++) {
-//
-//                sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
-//            }
-//
-//            sr.end();
-//        }
     }
 
     @Override

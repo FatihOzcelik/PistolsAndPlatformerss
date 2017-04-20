@@ -25,6 +25,47 @@ public class Entity implements Serializable {
     private boolean collisionX;
     private boolean collisionY;
     private EntityType type;
+    private float expiration;
+    private float radians;
+    private float radius;
+    private boolean isHit = false;
+    private int life;
+
+    public int getLife() {
+        return life;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
+    }
+
+    public float getRadius() {
+        return radius;
+    }
+
+    public void setRadius(float radius) {
+        this.radius = radius;
+    }
+
+    public boolean isIsHit() {
+        return isHit;
+    }
+
+    public void setIsHit(boolean isHit) {
+        this.isHit = isHit;
+    }
+
+    public void reduceExpiration(float delta) {
+        this.expiration -= delta;
+    }
+
+    public float getExpiration() {
+        return expiration;
+    }
+
+    public void setExpiration(float value) {
+        this.expiration = value;
+    }
 
     public void setType(EntityType type) {
         this.type = type;
@@ -53,7 +94,7 @@ public class Entity implements Serializable {
     public boolean isCollisionY() {
         return collisionY;
     }
-    
+
     public void setCollisionX(boolean collisionX) {
         this.collisionX = collisionX;
     }
@@ -81,7 +122,6 @@ public class Entity implements Serializable {
 //    public String getID() {
 //        return ID.toString();
 //    }
-    
     public UUID getID() {
         return this.ID;
     }
@@ -164,5 +204,13 @@ public class Entity implements Serializable {
 
     public String getSprite() {
         return sprite;
+    }
+
+    public float getRadians() {
+        return radians;
+    }
+
+    public void setRadians(float radians) {
+        this.radians = radians;
     }
 }

@@ -35,7 +35,7 @@ public class World {
     public Collection<Entity> getEntities() {
         return entityMap.values();
     }
-
+    
     public <E extends Entity> List<Entity> getEntities(Class<E>... entityTypes) {
         List<Entity> r = new ArrayList<>();
         for (Entity e : getEntities()) {

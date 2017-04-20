@@ -20,10 +20,10 @@ public class EntityPlugin implements IPluginService {
     public void start(GameData gameData, World world) {
         player = new Entity(10, 100, 100, 20, 2, true, 100);
         player.setType(PLAYER);
-//      player.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/player.png");
+        player.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/player.png");
 //      player.setSprite("/Users/Arian/Desktop/skole/Objekt/code/PistolsAndPlatformerss/Core/target/classes/dk/sdu/core/assets/player.png");
         
-        player.setSprite("\\Users\\Frank Sebastian\\Documents\\NetBeansProjects\\PistolsAndPlatformerss\\Core\\target\\classes\\dk\\sdu\\core\\assets\\player.png");
+//        player.setSprite("\\Users\\Frank Sebastian\\Documents\\NetBeansProjects\\PistolsAndPlatformerss\\Core\\target\\classes\\dk\\sdu\\core\\assets\\player.png");
         world.addEntity(player);
     }
 

@@ -6,7 +6,7 @@
         <artifactId>PistolsAndPlatformers-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>Player</artifactId>
+    <artifactId>CommonBullet</artifactId>
     <packaging>nbm</packaging>
     <build>
         <plugins>
@@ -17,7 +17,7 @@
                 <configuration>
                     <useOSGiDependencies>true</useOSGiDependencies>
                     <publicPackages>
-                        <publicPackage>dk.sdu.player</publicPackage>
+                        <publicPackage>dk.sdu.commonbullet</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>
@@ -40,26 +40,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>Common</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-util-ui</artifactId>
-            <version>RELEASE82</version>
-        </dependency>
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-modules</artifactId>
-            <version>RELEASE82</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>CommonBullet</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-util-lookup</artifactId>
-            <version>RELEASE82</version>
         </dependency>
     </dependencies>
     <properties>

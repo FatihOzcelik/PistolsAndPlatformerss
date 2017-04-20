@@ -5,3 +5,7 @@
 /application/target/
 /Player/target/
 /Collision/target/
+/Enemy/target/
+/Bullet/target/
+/CommonBullet/target/
+/Weapon/target/

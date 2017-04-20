@@ -7,7 +7,10 @@ import dk.sdu.common.data.World;
 import dk.sdu.common.data.Collision;
 import static dk.sdu.common.data.EntityType.PLAYER;
 import dk.sdu.common.services.IProcessingService;
+import dk.sdu.commonbullet.Bullet;
+import dk.sdu.commonbullet.BulletSPI;
 import static java.lang.Math.abs;
+import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -21,6 +24,8 @@ public class PlayerProcessing implements IProcessingService {
     private boolean canJump;
     float velocityY;
     float gravity = -500f;
+    private float CD;
+    private boolean canShoot;
 
     @Override
     public void process(GameData gameData, World world) {
@@ -52,6 +57,18 @@ public class PlayerProcessing implements IProcessingService {
                         dX = acceleration * dt + x;
                     } else {
                         dX = maxSpeed * dt + x;
+                    }
+                }
+
+                //Shooting                
+                weaponCD(gameData);
+                BulletSPI bulletProvider = Lookup.getDefault().lookup(BulletSPI.class);
+                if (gameData.getKeys().isDown(SPACE) && canShoot && bulletProvider != null) {
+                    if (world.getEntities(Bullet.class).size() < 6) {   //allow only 6 bullets at a time
+                        Entity bullet = bulletProvider.createBullet(gameData, entity);
+                        world.addEntity(bullet);
+                        canShoot = false;
+                        CD = 0.2f;
                     }
                 }
 
@@ -104,30 +121,15 @@ public class PlayerProcessing implements IProcessingService {
                 entity.setPositionY(y);
                 entity.setDeltaX(dX);
                 entity.setDeltaY(dY);
-
-//            updateShape(entity);
             }
         }
+    }
 
-//    private void updateShape(Entity entity) {
-//        float[] shapex = entity.getShapeX();
-//        float[] shapey = entity.getShapeY();
-//        float x = entity.getPositionX();
-//        float y = entity.getPositionY();
-//
-//        shapex[0] = (float) (x + Math.cos(1) * 8);
-//        shapey[0] = (float) (y + Math.sin(1) * 8);
-//
-//        shapex[1] = (float) (x + Math.cos(1 - 4 * 3.1415f / 5) * 8);
-//        shapey[1] = (float) (y + Math.sin(1 - 4 * 3.1145f / 5) * 8);
-//
-//        shapex[2] = (float) (x + Math.cos(1 + 3.1415f) * 5);
-//        shapey[2] = (float) (y + Math.sin(1 + 3.1415f) * 5);
-//
-//        shapex[3] = (float) (x + Math.cos(1 + 4 * 3.1415f / 5) * 8);
-//        shapey[3] = (float) (y + Math.sin(1 + 4 * 3.1415f / 5) * 8);
-//
-//        entity.setShapeX(shapex);
-//        entity.setShapeY(shapey);
+    private void weaponCD(GameData gameData) {
+        if (CD > 0) {
+            CD -= gameData.getDelta();
+        } else {
+            canShoot = true;
+        }
     }
 }
