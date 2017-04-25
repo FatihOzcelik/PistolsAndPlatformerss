@@ -1,3 +1,7 @@
 # PistolsAndPlatformerss
 
-Husk at ændre filepath i klasserne Game og EntityPlugin for at køre spillet.
+Husk at ændre filepath i følgende klasser for at køre spillet:
+- Game(Core),
+- EntityPlugin(Player),
+- EnemyPlugin(Enemy),
+- WeaponProcessing(Weapon) 
