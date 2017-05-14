@@ -18,7 +18,7 @@ public class Entity implements Serializable {
     private float acceleration;
     private float deacceleration;
     private boolean direction;
-    private int health;
+    private float health;
     private float[] shapeX = new float[4];
     private float[] shapeY = new float[4];
     private String sprite;
@@ -30,7 +30,25 @@ public class Entity implements Serializable {
     private float radius;
     private boolean isHit = false;
     private int life;
+    private float width;
+    private float height;
+    
+    public float getWidth() {
+        return width;
+    }
 
+    public void setWidth(float width) {
+        this.width = width;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
+    }
+    
     public int getLife() {
         return life;
     }
@@ -126,11 +144,11 @@ public class Entity implements Serializable {
         return this.ID;
     }
 
-    public void setHealth(int health) {
+    public void setHealth(float health) {
         this.health = health;
     }
 
-    public int getHealth() {
+    public float getHealth() {
         return health;
     }
 

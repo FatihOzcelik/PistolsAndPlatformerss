@@ -28,15 +28,15 @@ public class Collision {
             }
         }
     }
-    World world =  new World();
-    public void entityCollision (){
-        for (Entity entity1: world.getEntities()) {
-            for(Entity entity2: world.getEntities()) {
-                if(entity2.equals(entity1)){
-                    
-                } else {
-                }
-            }
-        }
-    }
+//    World world =  new World();
+//    public void entityCollision (){
+//        for (Entity entity1: world.getEntities()) {
+//            for(Entity entity2: world.getEntities()) {
+//                if(entity2.equals(entity1)){
+//                    
+//                } else {
+//                }
+//            }
+//        }
+//    }
 }

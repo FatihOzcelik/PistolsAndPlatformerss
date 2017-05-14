@@ -1,5 +1,6 @@
 package dk.sdu.enemy;
 
+import dk.sdu.common.data.Collision;
 import dk.sdu.common.data.Entity;
 import dk.sdu.common.data.GameData;
 import static dk.sdu.common.data.GameKeys.*;
@@ -10,6 +11,7 @@ import dk.sdu.common.services.IProcessingService;
 import static java.lang.Math.abs;
 import java.util.Random;
 import org.openide.util.lookup.ServiceProvider;
+import static java.lang.Math.abs;
 
 /**
  *
@@ -36,11 +38,10 @@ public class EnemyProcessing implements IProcessingService {
                 float dX = entity.getDeltaX();
                 float dY = entity.getDeltaY();
 
-
-                if(Math.random() > 0.99){
+                if (Math.random() > 0.99) {
                     entity.setDirection(!entity.isDirection());
                 }
-                
+
                 // Walking right or left
                 if (entity.isDirection()) {
                     if (abs(x - dX) / dt > maxSpeed) {
@@ -48,13 +49,17 @@ public class EnemyProcessing implements IProcessingService {
                     } else {
                         dX = maxSpeed * dt + x;
                     }
+//                    if (entity.isIsHit()) {
+//                        dX = x;
+//                    }
+                } else if (abs(x - dX) / dt > maxSpeed) {
+                    dX = x - (acceleration * dt);
                 } else {
-                    if (abs(x - dX) / dt > maxSpeed) {
-                        dX = x - (acceleration * dt);
-                    } else {
-                        dX = x - (maxSpeed * dt);
-                    }
+                    dX = x - (maxSpeed * dt);
                 }
+//                if (entity.isIsHit()) {
+//                    dX = x;
+//                }
 
                 //gravity
 //            dY = ((dY - y) * -10) * dt;
@@ -74,6 +79,21 @@ public class EnemyProcessing implements IProcessingService {
 
                 }
 
+                /**
+                 * Collision with entities
+                 */
+                if (entity.isIsHit()) {
+//                    System.out.println("Enemy is hit!");
+                    entity.setHealth(entity.getHealth() - 50);
+                    entity.setIsHit(false);
+                    if (entity.getHealth() <= 0) {
+                        world.removeEntity(entity);
+                    }
+                }
+
+                /**
+                 * Collision with map
+                 */
                 //save the local delta position
                 entity.setDeltaX(dX);
                 entity.setDeltaY(dY);
@@ -105,30 +125,7 @@ public class EnemyProcessing implements IProcessingService {
                 entity.setPositionY(y);
                 entity.setDeltaX(dX);
                 entity.setDeltaY(dY);
-
-//            updateShape(entity);
             }
         }
-
-//    private void updateShape(Entity entity) {
-//        float[] shapex = entity.getShapeX();
-//        float[] shapey = entity.getShapeY();
-//        float x = entity.getPositionX();
-//        float y = entity.getPositionY();
-//
-//        shapex[0] = (float) (x + Math.cos(1) * 8);
-//        shapey[0] = (float) (y + Math.sin(1) * 8);
-//
-//        shapex[1] = (float) (x + Math.cos(1 - 4 * 3.1415f / 5) * 8);
-//        shapey[1] = (float) (y + Math.sin(1 - 4 * 3.1145f / 5) * 8);
-//
-//        shapex[2] = (float) (x + Math.cos(1 + 3.1415f) * 5);
-//        shapey[2] = (float) (y + Math.sin(1 + 3.1415f) * 5);
-//
-//        shapex[3] = (float) (x + Math.cos(1 + 4 * 3.1415f / 5) * 8);
-//        shapey[3] = (float) (y + Math.sin(1 + 4 * 3.1415f / 5) * 8);
-//
-//        entity.setShapeX(shapex);
-//        entity.setShapeY(shapey);
     }
 }

@@ -9,6 +9,7 @@ import dk.sdu.commonbullet.Bullet;
 import dk.sdu.commonbullet.BulletSPI;
 import org.openide.util.lookup.ServiceProvider;
 import static java.lang.Math.abs;
+import static java.lang.Math.abs;
 
 /**
  *
@@ -41,7 +42,7 @@ public class WeaponProcessing implements IProcessingService, BulletSPI {
         float radians = bullet.getRadians();
         float speed = 350;
         float maxSpeed = bullet.getMaxSpeed();
-        float acceleration = bullet.getAcceleration(); 
+        float acceleration = bullet.getAcceleration();
 
         // Bullet going right
         if (bullet.isDirection()) {             //checks if bullet direction is true (right)
@@ -60,11 +61,17 @@ public class WeaponProcessing implements IProcessingService, BulletSPI {
                 dx = x - (maxSpeed * dt);
             }
         }
-        
+
+        if (bullet.isIsHit()) {
+//            System.out.println("Bullet is hit!");
+            bullet.setExpiration(0);
+            bullet.setIsHit(false);
+        }
+
         // Set position:
         x = dx;
         y = dy;
-        
+
         //update bullet
         bullet.setPositionX(x);
         bullet.setPositionY(y);
@@ -78,9 +85,9 @@ public class WeaponProcessing implements IProcessingService, BulletSPI {
         float y = e.getPositionY();
         float dt = gameData.getDelta();
         float dx = e.getDeltaX();
-        float dy = e.getDeltaY();  
+        float dy = e.getDeltaY();
 
-        Entity bullet = new Bullet(0, 0, 200, 30, 5, true, 100);
+        Entity bullet = new Bullet(0, 0, 300, 30, 5, true, 100);
         bullet.setType(BULLET);
         bullet.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/bullet.png");
         bullet.setDeltaX(dx + 15);
