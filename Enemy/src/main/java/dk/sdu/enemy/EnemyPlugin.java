@@ -32,7 +32,7 @@ public class EnemyPlugin implements IPluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        enemy = new Entity(100, 100, 100, 20, 2, true, 100000);
+        enemy = new Entity(100, 100, 100, 20, 2, true, 10000);
         enemy1 = new Entity(600, 100, 100, 20, 2, true, 150);
 //        enemy2 = new Entity(100, 100, 100, 20, 2, true, 100);
 //        enemy3 = new Entity(100, 100, 100, 20, 2, true, 800);

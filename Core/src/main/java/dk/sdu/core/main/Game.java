@@ -2,6 +2,7 @@ package dk.sdu.core.main;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -58,6 +59,8 @@ public class Game implements ApplicationListener {
     private SpriteBatch batch;
     private HUD hud;
     private int oldValue;
+    private Screen gameOverScreen;
+    private boolean isPlayerDead;
 
     @Override
     public void create() {
@@ -109,10 +112,12 @@ public class Game implements ApplicationListener {
 //            body.createFixture(fDef);
 //
 //        }
-
         hud = new HUD(batch);
 
         oldValue = world.getEntities().size();
+
+//        gameOverScreen = new GameOverScreen();
+        gameOverScreen = new GameOverScreen();
 
     }
 
@@ -121,6 +126,17 @@ public class Game implements ApplicationListener {
         cam.viewportWidth = width;
         cam.viewportHeight = height;
         cam.update();
+
+        if (gameOverScreen != null) {
+            gameOverScreen.resize(width, height);
+        }
+    }
+
+    private void removeAllEntities() {
+        for (Entity entity : world.getEntities()) {
+            world.removeEntity(entity);
+        }
+
     }
 
     private void update() {
@@ -132,7 +148,6 @@ public class Game implements ApplicationListener {
 //            System.out.println("entityhealth for : " + entity.getType() + ": " + entity.getHealth());
 //        }
 //        System.out.println("world.getEntities.size: " + world.getEntities().size());
-
         //Checks if an enemy is removed from the world. If so, 100 is added to the score.
         int newValue = world.getEntities().size();
         for (Entity entity : world.getEntities()) {
@@ -142,13 +157,18 @@ public class Game implements ApplicationListener {
             }
 
             //If the entity has 0 health and it is the player, then the game is over
-            if (entity.getHealth() == 0 && entity.getType().equals(PLAYER)) {
+            if (entity.getHealth() < 1 && entity.getType().equals(PLAYER)) {
                 System.out.println("Game Over");
-            //        GameOverScreen gameOverScreen = new GameOverScreen();
-            //        setScreen(gameOverScreen);
+                isPlayerDead = true; //this will trigger the renderer to draw the gameover screen
             }
         }
 
+        //check the timer, and if it is 0, then the game is over
+        if (hud.getWorldTimer() == 0) {
+            isPlayerDead = true; //this will trigger the renderer to draw the gameover screen
+        }
+
+//        System.out.println("hud.getWorldTimer: " + hud.getWorldTimer());
         //        for (Entity entity : world.getEntities()) {
         //            //Checks if an entity has 0 health and if so, the entity is removed
         //            if (entity.getHealth() == 0) {
@@ -186,7 +206,7 @@ public class Game implements ApplicationListener {
 
     @Override
     public void render() {
-        // clear screen to black
+        // clear gameOverScreen to black
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         gameData.setDelta(Gdx.graphics.getDeltaTime());
@@ -199,9 +219,13 @@ public class Game implements ApplicationListener {
 
         //renders Box2DDebugLines
 //        b2dr.render(world, cam.combined);
-
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
+
+        if (gameOverScreen != null && isPlayerDead) {
+            gameOverScreen.render(Gdx.graphics.getDeltaTime());
+            removeAllEntities();
+        }
 
         update();
         draw();
@@ -237,16 +261,38 @@ public class Game implements ApplicationListener {
 
     @Override
     public void pause() {
+        if (gameOverScreen != null) {
+            gameOverScreen.pause();
+        }
     }
 
     @Override
     public void resume() {
+        if (gameOverScreen != null) {
+            gameOverScreen.resume();
+        }
     }
 
     @Override
     public void dispose() {
         map.dispose();
         tiledMapRenderer.dispose();
+
+        if (gameOverScreen != null) {
+            gameOverScreen.hide();
+        }
+    }
+
+    public void setScreen(Screen screen) {
+        if (this.gameOverScreen != null) {
+            this.gameOverScreen.hide();
+        }
+        this.gameOverScreen = screen;
+        if (this.gameOverScreen != null) {
+            this.gameOverScreen.show();
+            this.gameOverScreen.resize(Gdx.graphics.getWidth(),
+                    Gdx.graphics.getHeight());
+        }
     }
 
     private final LookupListener lookupListener = new LookupListener() {

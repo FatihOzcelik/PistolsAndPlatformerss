@@ -76,6 +76,10 @@ public class HUD implements Disposable {
 
     }
 
+    public Integer getWorldTimer() {
+        return worldTimer;
+    }
+
     public void update(float dt) {
         timeCount += dt;
         if (timeCount >= 1) {
