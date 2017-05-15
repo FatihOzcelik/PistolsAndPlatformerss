@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dk.sdu.silentupdate;
+package org.netbeans.modules.autoupdate.silentupdate;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
