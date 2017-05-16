@@ -34,6 +34,8 @@ public class EnemyPlugin implements IPluginService {
     public void start(GameData gameData, World world) {
         enemy = new Entity(100, 100, 100, 20, 2, true, 10000);
         enemy1 = new Entity(600, 100, 100, 20, 2, true, 150);
+        enemy.setWidth(48);
+        enemy.setHeight(45);
 //        enemy2 = new Entity(100, 100, 100, 20, 2, true, 100);
 //        enemy3 = new Entity(100, 100, 100, 20, 2, true, 800);
 //        enemy4 = new Entity(100, 100, 100, 20, 2, true, 100);
@@ -54,10 +56,11 @@ public class EnemyPlugin implements IPluginService {
 //        enemy9.setType(ENEMY);
 
 
-//      enemy.setSprite("/Users/Arian/Desktop/skole/Objekt/code/PistolsAndPlatformerss/Core/target/classes/dk/sdu/core/assets/enemy.png");
+      enemy.setSprite("/Users/Arian/Desktop/skole/Objekt/code/PistolsAndPlatformerss/Core/target/classes/dk/sdu/core/assets/enemy.png");
+      enemy1.setSprite("/Users/Arian/Desktop/skole/Objekt/code/PistolsAndPlatformerss/Core/target/classes/dk/sdu/core/assets/enemy.png");
 //      enemy.setSprite("\\Users\\Frank Sebastian\\Documents\\NetBeansProjects\\PistolsAndPlatformerss\\Core\\target\\classes\\dk\\sdu\\core\\assets\\enemy.png");
-        enemy.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/enemy.png");
-        enemy1.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/enemy.png");
+//        enemy.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/enemy.png");
+//        enemy1.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/enemy.png");
 //        enemy2.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/enemy.png");
 //        enemy3.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/enemy.png");
 //        enemy4.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/enemy.png");

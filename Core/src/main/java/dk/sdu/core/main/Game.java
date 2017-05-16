@@ -34,9 +34,11 @@ import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
 import static dk.sdu.common.data.EntityType.BULLET;
 import static dk.sdu.common.data.EntityType.ENEMY;
+import static dk.sdu.common.data.EntityType.MAP;
 import static dk.sdu.common.data.EntityType.PLAYER;
 import dk.sdu.core.scenes.HUD;
 import dk.sdu.core.screens.GameOverScreen;
+import java.util.Random;
 
 /**
  *
@@ -84,8 +86,8 @@ public class Game implements ApplicationListener {
 
 //      map = loader.load("\\Users\\Frank Sebastian\\Documents\\NetBeansProjects\\PistolsAndPlatformerss\\Core\\src\\main\\resources\\dk\\sdu\\core\\assets\\PistolsAndPlatformersMap.tmx");
 //        map = loader.load("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/PistolsAndPlatformersMap2.tmx");
-        map = loader.load("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss - loadunload/Core/src/main/resources/dk/sdu/core/assets/PistolsAndPlatformersMap.tmx");
-        // map = loader.load("/Users/Arian/Desktop/skole/Objekt/code/PistolsAndPlatformerss/Core/target/classes/dk/sdu/core/assets/PistolsAndPlatformersMap.tmx");
+//        map = loader.load("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss - loadunload/Core/src/main/resources/dk/sdu/core/assets/PistolsAndPlatformersMap.tmx");
+         map = loader.load("/Users/Arian/Desktop/skole/Objekt/code/PistolsAndPlatformerss/Core/target/classes/dk/sdu/core/assets/PistolsAndPlatformersMap.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 
         batch = new SpriteBatch();
@@ -231,12 +233,10 @@ public class Game implements ApplicationListener {
         draw();
     }
 
-    private Sprites makeSprite(Entity e) {
+    private Sprites makeSprite(Entity e, float x, float y) {
         Sprites sprites = new Sprites(new Texture(e.getSprite()), e.getID());
-        sprites.setX(e.getPositionX());
-        sprites.setY(e.getPositionY());
-        e.setHeight(sprites.getTexture().getHeight());
-        e.setWidth(sprites.getTexture().getWidth());
+        sprites.setX(x);
+        sprites.setY(y);
 
         return sprites;
     }
@@ -244,16 +244,32 @@ public class Game implements ApplicationListener {
     private void draw() {
         Sprites sprites = null;
         batch.begin();
+        Random platformNumb = new Random();
 
         for (Entity entity : world.getEntities()) {
-            sprites = makeSprite(entity);
-
-            if (entity.isDirection()) {
-                sprites.flip(false, false);
+            if (entity.getType().equals(MAP)) {
+                int numbPlatWidth = (int) (entity.getWidth() / 40) - 1;
+                entity.setSprite(entity.getSprite().substring(0, entity.getSprite().lastIndexOf("/") + 1) + "edgeStart.png");
+                sprites = makeSprite(entity, entity.getPositionX(), entity.getPositionY());
+                sprites.draw(batch);
+                for (int i = 1; i < numbPlatWidth; i++) {
+                    entity.setSprite(entity.getSprite().substring(0, entity.getSprite().lastIndexOf("/") + 1) + "platform" + i % 4 + ".png");
+                    sprites = makeSprite(entity, entity.getPositionX() + (i * 40), entity.getPositionY());
+                    sprites.draw(batch);
+                }
+                entity.setSprite(entity.getSprite().substring(0, entity.getSprite().lastIndexOf("/") + 1) + "edgeEnd.png");
+                sprites = makeSprite(entity, entity.getPositionX() + numbPlatWidth * 40, entity.getPositionY());
+                sprites.draw(batch);
             } else {
-                sprites.flip(true, false);
+                sprites = makeSprite(entity, entity.getPositionX(), entity.getPositionY());
+
+                if (entity.isDirection()) {
+                    sprites.flip(false, false);
+                } else {
+                    sprites.flip(true, false);
+                }
+                sprites.draw(batch);
             }
-            sprites.draw(batch);
         }
 
         batch.end();

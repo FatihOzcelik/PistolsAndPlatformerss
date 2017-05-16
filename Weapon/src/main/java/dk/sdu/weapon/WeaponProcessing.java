@@ -88,8 +88,11 @@ public class WeaponProcessing implements IProcessingService, BulletSPI {
         float dy = e.getDeltaY();
 
         Entity bullet = new Bullet(0, 0, 300, 30, 5, true, 100);
+        bullet.setWidth(30);
+        bullet.setHeight(16);
         bullet.setType(BULLET);
-        bullet.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/bullet.png");
+        bullet.setSprite("/Users/Arian/Desktop/skole/Objekt/code/PistolsAndPlatformerss/Core/target/classes/dk/sdu/core/assets/bullet.png");
+//        bullet.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/bullet.png");
         bullet.setDeltaX(dx + 15);
         bullet.setDeltaY(dy + 15);
 

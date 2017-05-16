@@ -117,21 +117,18 @@ public class PlayerProcessing implements IProcessingService {
                 entity.setDeltaY(dY);
 
 //                //check if this entity colides with the map
-                collisionDetection.mapCollision(entity);
+                collisionDetection.mapCollision(entity, world);
 
-                //save collision test results
-                boolean collisionX = entity.isCollisionX();
-                boolean collisionY = entity.isCollisionY();
 
                 // react to x collision by not moving x
-                if (collisionX) {
+                if (entity.isCollisionX()) {
                     dX = x;
                 }
                 // react to y collision by not moving y
-                if (collisionY) {
+                if (entity.isCollisionY()) {
                     velocityY = 0;
                     dY = y;
-                    canJump = collisionY;
+                    canJump = true;
                 }
 
                 // Set position:
