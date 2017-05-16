@@ -31,6 +31,8 @@ public class Enemy extends Entity {
 
     public Enemy(float positionX, float positionY, float maxSpeed, float acceleration, float deacceleration, boolean direction, int health) {
         super(positionX, positionY, maxSpeed, acceleration, deacceleration, direction, health);
+        
+
     }
     
 //    public void update(){

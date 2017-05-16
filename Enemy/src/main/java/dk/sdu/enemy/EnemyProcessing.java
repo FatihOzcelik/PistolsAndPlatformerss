@@ -38,9 +38,54 @@ public class EnemyProcessing implements IProcessingService {
                 float dX = entity.getDeltaX();
                 float dY = entity.getDeltaY();
 
-                if (Math.random() > 0.99) {
-                    entity.setDirection(!entity.isDirection());
+                
+//                if(Math.random() > 0.99){
+//                    entity.setDirection(!entity.isDirection());
+//                }
+
+
+//                if ((PLAYER)){
+//                    if (abs(x - dX) / dt > maxSpeed) {
+//                        dX = acceleration * dt + x;
+//                    } else {
+//                        dX = maxSpeed * dt + x;
+//                    }
+//                } else {
+//                    if (abs(x - dX) / dt > maxSpeed) {
+//                        dX = x - (acceleration * dt);
+//                    } else {
+//                        dX = x - (maxSpeed * dt);
+//                    }
+//                }
+//                
+//                if (entity.getPositionX(Player)) {
+//                    entity.getPositionX(false);
+//                    if (abs(x - dX) / dt > maxSpeed) {
+//                        dX = x - (acceleration * dt);
+//                    } else {
+//                        dX = x - (maxSpeed * dt);
+//                    }
+//                }
+                
+                //Using the same control settings as the player
+                if (gameData.getKeys().isDown(LEFT)) {
+                    entity.setDirection(false);
+                    if (abs(x - dX) / dt > maxSpeed) {
+                        dX = x - (acceleration * dt);
+                    } else {
+                        dX = x - (maxSpeed * dt);
+                    }
                 }
+                //Using the same control settings as the player
+                if (gameData.getKeys().isDown(RIGHT)) {
+                    entity.setDirection(true);
+                    if (abs(x - dX) / dt > maxSpeed) {
+                        dX = acceleration * dt + x;
+                    } else {
+                        dX = maxSpeed * dt + x;
+                    }
+                
+
 
                 // Walking right or left
                 if (entity.isDirection()) {
@@ -128,4 +173,5 @@ public class EnemyProcessing implements IProcessingService {
             }
         }
     }
+}
 }

@@ -231,4 +231,9 @@ public class Entity implements Serializable {
     public void setRadians(float radians) {
         this.radians = radians;
     }
+
+    public boolean getPositionX(EntityType entityType) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
