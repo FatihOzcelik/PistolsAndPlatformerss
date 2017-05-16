@@ -34,7 +34,7 @@ public class Collision {
         for (Entity otherEntity : world.getEntities()) {
             if (otherEntity.getType().equals(MAP)) {
                 if (testCollision(entity, otherEntity)) {
-                    System.out.println("BOOOOOOOOOO");
+//                    System.out.println("BOOOOOOOOOO");
                     entity.setCollisionY(true);
                     entity.setCollisionX(true);
                 }

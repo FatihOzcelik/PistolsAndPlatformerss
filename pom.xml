@@ -68,6 +68,7 @@
         <module>CommonBullet</module>
         <module>Collision</module>
         <module>MapGenerator</module>
+        <module>EnemyAI</module>
     </modules>
 
     <properties>
