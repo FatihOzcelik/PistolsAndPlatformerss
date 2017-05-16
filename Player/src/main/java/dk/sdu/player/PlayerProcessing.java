@@ -82,7 +82,9 @@ public class PlayerProcessing implements IProcessingService {
                 //gravity
 //            dY = ((dY - y) * -10) * dt;
                 dY += velocityY * dt;      // Apply vertical velocity to X position
-                velocityY += gravity * dt;
+                if(!entity.isCollisionY()){
+                    velocityY += gravity * dt;
+                }
 
                 // Jump           
                 if (gameData.getKeys().isDown(UP)) {

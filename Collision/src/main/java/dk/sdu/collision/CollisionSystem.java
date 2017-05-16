@@ -4,6 +4,7 @@ import dk.sdu.common.data.Entity;
 import static dk.sdu.common.data.EntityType.BULLET;
 import static dk.sdu.common.data.EntityType.ENEMY;
 import static dk.sdu.common.data.EntityType.ENEMYAI;
+import static dk.sdu.common.data.EntityType.MAP;
 import static dk.sdu.common.data.EntityType.PLAYER;
 import dk.sdu.common.data.GameData;
 import dk.sdu.common.data.World;
@@ -25,16 +26,37 @@ public class CollisionSystem implements IProcessingService {
             for (Entity otherEntity : world.getEntities()) {
                 if (otherEntity.getType() != entity.getType() && otherEntity != entity && !entity.isIsHit() && testCollision(entity, otherEntity)) {
 
-                    //check if player collides with own bullets
+                    //check if player collides with own bullets and ignore
                     if (entity.getType().equals(PLAYER) && otherEntity.getType().equals(BULLET)
                             || entity.getType().equals(BULLET) && otherEntity.getType().equals(PLAYER)) {
                         entity.setIsHit(false);
                         otherEntity.setIsHit(false);
-
                     }
-                    //check if enemy collides with enemyai
-                    if (entity.getType().equals(ENEMY) && otherEntity.getType().equals(ENEMYAI)
+
+                    //check if enemy collides with enemyai and ignore
+                    else if (entity.getType().equals(ENEMY) && otherEntity.getType().equals(ENEMYAI)
                             || entity.getType().equals(ENEMYAI) && otherEntity.getType().equals(ENEMY)) {
+                        entity.setIsHit(false);
+                        otherEntity.setIsHit(false);
+                    }
+
+                    //check if player collides with map and ignore
+                    else if (entity.getType().equals(PLAYER) && otherEntity.getType().equals(MAP)
+                            || entity.getType().equals(MAP) && otherEntity.getType().equals(PLAYER)) {
+                        entity.setIsHit(false);
+                        otherEntity.setIsHit(false);
+                    }
+
+                    //check if enemy collides with map and ignore
+                    else if (entity.getType().equals(ENEMY) && otherEntity.getType().equals(MAP)
+                            || entity.getType().equals(MAP) && otherEntity.getType().equals(ENEMY)) {
+                        entity.setIsHit(false);
+                        otherEntity.setIsHit(false);
+                    }
+
+                    //check if enemyai collides with map and ignore
+                    else if (entity.getType().equals(ENEMYAI) && otherEntity.getType().equals(MAP)
+                            || entity.getType().equals(MAP) && otherEntity.getType().equals(ENEMYAI)) {
                         entity.setIsHit(false);
                         otherEntity.setIsHit(false);
 

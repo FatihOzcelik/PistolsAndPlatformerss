@@ -31,11 +31,11 @@ public class MapHandler implements IPluginService {
     public void generateMap(int numberOfPlatforms, int numberOfLayers, GameData gameData, World world) {
 //        platformList.clear();
         int NumberOfPointsToPlace = (numberOfPlatforms * 2) - 2;
-        int layerDistance = 600 / numberOfLayers - 10;
+        int layerDistance = 355 / numberOfLayers - 10;
         for (int i = 0; i < numberOfLayers; i++) {
             for (int j = 0; j <= NumberOfPointsToPlace; j++) {
                 if (j == 0) {
-                    height = ((layerDistance) * (i + 1)) - layerDistance / 2 + newNumber.nextInt(layerDistance / 2);
+                    height = ((layerDistance) * (i + 1) - layerDistance / 7 + newNumber.nextInt(layerDistance / 7)) + 100;
                     platformPlacements[i][j] = height;
                 } else {
 
@@ -71,7 +71,7 @@ public class MapHandler implements IPluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        generateMap(2, 2, gameData, world);
+        generateMap(3, 3, gameData, world);
     }
 
     @Override

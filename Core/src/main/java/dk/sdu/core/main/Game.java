@@ -238,7 +238,7 @@ public class Game implements ApplicationListener {
         sprites.setX(x);
         sprites.setY(y);
 
-        if (!e.getType().equals(MAP)) {
+        if (!e.getType().equals(MAP) && !e.getType().equals(BULLET)) {
             e.setHeight(sprites.getTexture().getHeight());
             e.setWidth(sprites.getTexture().getWidth());
         }
