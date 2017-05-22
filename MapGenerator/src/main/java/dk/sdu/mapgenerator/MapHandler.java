@@ -57,8 +57,8 @@ public class MapHandler implements IPluginService {
 
                     world.addEntity(platform);
 
-//                    platform.setSprite("/Users/Arian/Desktop/skole/Objekt/code/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/mapSprites/");
-                    platform.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/mapSprites/");
+                    platform.setSprite("/Users/Arian/Desktop/skole/Objekt/code/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/mapSprites/");
+//                    platform.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/mapSprites/");
 //                    platform.setSprite("/Users/Frank Sebastian/Documents/NetBeansProjects/PistolsAndPlatformerss/Core/target/classes/dk/sdu/core/assets/mapSprites/");
                 }
             }

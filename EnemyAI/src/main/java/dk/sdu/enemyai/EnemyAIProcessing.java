@@ -1,22 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dk.sdu.enemyai;
 
 import dk.sdu.common.data.Collision;
 import dk.sdu.common.data.Entity;
-import static dk.sdu.common.data.EntityType.ENEMY;
-import static dk.sdu.common.data.EntityType.ENEMYAI;
 import dk.sdu.common.data.GameData;
-import static dk.sdu.common.data.GameKeys.DOWN;
-import static dk.sdu.common.data.GameKeys.LEFT;
-import static dk.sdu.common.data.GameKeys.RIGHT;
+import static dk.sdu.common.data.GameKeys.*;
 import dk.sdu.common.data.World;
+import dk.sdu.common.data.Collision;
+import static dk.sdu.common.data.EntityType.ENEMY;
+import static dk.sdu.common.data.EntityType.PLAYER;
 import dk.sdu.common.services.IProcessingService;
 import static java.lang.Math.abs;
+import java.util.Random;
 import org.openide.util.lookup.ServiceProvider;
+import static java.lang.Math.abs;
 
 /**
  *
@@ -29,11 +25,13 @@ public class EnemyAIProcessing implements IProcessingService {
     private boolean canJump;
     float velocityY;
     float gravity = -500f;
+    boolean direction = true;
 
     @Override
     public void process(GameData gameData, World world) {
         for (Entity entity : world.getEntities()) {
-            if (entity.getType().equals(ENEMYAI)) {
+            if (entity.getType().equals(ENEMY)) {
+                boolean direction = entity.isDirection();
                 float x = entity.getPositionX();
                 float y = entity.getPositionY();
                 float dt = gameData.getDelta();
@@ -43,45 +41,16 @@ public class EnemyAIProcessing implements IProcessingService {
                 float dX = entity.getDeltaX();
                 float dY = entity.getDeltaY();
 
-                
-//                if(Math.random() > 0.99){
-//                    entity.setDirection(!entity.isDirection());
-//                }
-
-
-//                if ((PLAYER)){
-//                    if (abs(x - dX) / dt > maxSpeed) {
-//                        dX = acceleration * dt + x;
-//                    } else {
-//                        dX = maxSpeed * dt + x;
-//                    }
-//                } else {
-//                    if (abs(x - dX) / dt > maxSpeed) {
-//                        dX = x - (acceleration * dt);
-//                    } else {
-//                        dX = x - (maxSpeed * dt);
-//                    }
-//                }
-//                
-//                if (entity.getPositionX(Player)) {
-//                    entity.getPositionX(false);
-//                    if (abs(x - dX) / dt > maxSpeed) {
-//                        dX = x - (acceleration * dt);
-//                    } else {
-//                        dX = x - (maxSpeed * dt);
-//                    }
-//                }
-                
-                //Using the same control settings as the player
-                if (gameData.getKeys().isDown(LEFT)) {
-                    entity.setDirection(false);
+                for (Entity player : world.getEntities()) {
+                    if (player.getType().equals(PLAYER)) {
+                        if (entity.getPositionX() < player.getPositionX() - 30) {
+                            direction = true;
+                        } else if (entity.getPositionX() - 30 > player.getPositionX()) {
+                            direction = false;
+                        }
+                        entity.setDirection(direction);
+                    }
                 }
-                //Using the same control settings as the player
-                if (gameData.getKeys().isDown(RIGHT)) {
-                    entity.setDirection(true);
-                }
-                
-
 
                 // Walking right or left
                 if (entity.isDirection()) {

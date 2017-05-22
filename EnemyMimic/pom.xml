@@ -6,7 +6,7 @@
         <artifactId>PistolsAndPlatformers-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>EnemyAI</artifactId>
+    <artifactId>EnemyMimic</artifactId>
     <packaging>nbm</packaging>
     <build>
         <plugins>
@@ -14,9 +14,6 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
                 <extensions>true</extensions>
-                <configuration>
-                    <useOSGiDependencies>true</useOSGiDependencies>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -52,5 +49,5 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <name>EnemyAI</name>
+    <name>EnemyMimic</name>
 </project>

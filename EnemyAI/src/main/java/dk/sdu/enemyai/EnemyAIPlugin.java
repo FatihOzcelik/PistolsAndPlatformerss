@@ -7,7 +7,6 @@ package dk.sdu.enemyai;
 
 import dk.sdu.common.data.Entity;
 import static dk.sdu.common.data.EntityType.ENEMY;
-import static dk.sdu.common.data.EntityType.ENEMYAI;
 import dk.sdu.common.data.GameData;
 import dk.sdu.common.data.World;
 import dk.sdu.common.services.IPluginService;
@@ -15,7 +14,7 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
- * @author fatihozcelik
+ * @author Frank Sebastian
  */
 @ServiceProvider(service = IPluginService.class)
 public class EnemyAIPlugin implements IPluginService {
@@ -35,6 +34,8 @@ public class EnemyAIPlugin implements IPluginService {
     public void start(GameData gameData, World world) {
         enemy = new Entity(100, 100, 100, 20, 2, true, 10000);
         enemy1 = new Entity(600, 100, 100, 20, 2, true, 150);
+//        enemy.setWidth(48);
+//        enemy.setHeight(45);
 //        enemy2 = new Entity(100, 100, 100, 20, 2, true, 100);
 //        enemy3 = new Entity(100, 100, 100, 20, 2, true, 800);
 //        enemy4 = new Entity(100, 100, 100, 20, 2, true, 100);
@@ -43,8 +44,8 @@ public class EnemyAIPlugin implements IPluginService {
 //        enemy7 = new Entity(100, 100, 100, 20, 2, true, 100);
 //        enemy8 = new Entity(100, 100, 100, 20, 2, true, 100);
 //        enemy9 = new Entity(100, 100, 100, 20, 2, true, 100);
-        enemy.setType(ENEMYAI);
-        enemy1.setType(ENEMYAI);
+        enemy.setType(ENEMY);
+        enemy1.setType(ENEMY);
 //        enemy2.setType(ENEMY);
 //        enemy3.setType(ENEMY);
 //        enemy4.setType(ENEMY);
@@ -55,11 +56,11 @@ public class EnemyAIPlugin implements IPluginService {
 //        enemy9.setType(ENEMY);
 
 
-//      enemy.setSprite("/Users/Arian/Desktop/skole/Objekt/code/PistolsAndPlatformerss/Core/target/classes/dk/sdu/core/assets/enemy.png");
-//      enemy1.setSprite("/Users/Arian/Desktop/skole/Objekt/code/PistolsAndPlatformerss/Core/target/classes/dk/sdu/core/assets/enemy.png");
+      enemy.setSprite("/Users/Arian/Desktop/skole/Objekt/code/PistolsAndPlatformerss/Core/target/classes/dk/sdu/core/assets/enemy.png");
+      enemy1.setSprite("/Users/Arian/Desktop/skole/Objekt/code/PistolsAndPlatformerss/Core/target/classes/dk/sdu/core/assets/enemy.png");
 //      enemy.setSprite("\\Users\\Frank Sebastian\\Documents\\NetBeansProjects\\PistolsAndPlatformerss\\Core\\target\\classes\\dk\\sdu\\core\\assets\\enemy.png");
-        enemy.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/enemy.png");
-        enemy1.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/enemy.png");
+//        enemy.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/enemy.png");
+//        enemy1.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/enemy.png");
 //        enemy2.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/enemy.png");
 //        enemy3.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/enemy.png");
 //        enemy4.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/enemy.png");
@@ -96,4 +97,3 @@ public class EnemyAIPlugin implements IPluginService {
 //        world.removeEntity(enemy9.getID().toString());
     }
 }
-
