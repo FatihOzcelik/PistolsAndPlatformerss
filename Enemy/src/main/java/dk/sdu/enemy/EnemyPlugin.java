@@ -56,8 +56,8 @@ public class EnemyPlugin implements IPluginService {
 //        enemy9.setType(ENEMY);
 
 
-      enemy.setSprite("/Users/Arian/Desktop/skole/Objekt/code/PistolsAndPlatformerss/Core/target/classes/dk/sdu/core/assets/enemy.png");
-      enemy1.setSprite("/Users/Arian/Desktop/skole/Objekt/code/PistolsAndPlatformerss/Core/target/classes/dk/sdu/core/assets/enemy.png");
+      enemy.setSprite("enemy.png");
+      enemy1.setSprite("enemy.png");
 //      enemy.setSprite("\\Users\\Frank Sebastian\\Documents\\NetBeansProjects\\PistolsAndPlatformerss\\Core\\target\\classes\\dk\\sdu\\core\\assets\\enemy.png");
 //        enemy.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/enemy.png");
 //        enemy1.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/enemy.png");

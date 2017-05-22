@@ -46,6 +46,7 @@ import java.util.Random;
  */
 public class Game implements ApplicationListener {
 
+    private final String pathToAssets = "/Users/Arian/Desktop/skole/Objekt/code/PistolsAndPlatformerss/Core/target/classes/dk/sdu/core/assets/";
     private static OrthographicCamera cam;
     private ShapeRenderer sr;
     private final Lookup lookup = Lookup.getDefault();
@@ -87,7 +88,7 @@ public class Game implements ApplicationListener {
 //      map = loader.load("\\Users\\Frank Sebastian\\Documents\\NetBeansProjects\\PistolsAndPlatformerss\\Core\\src\\main\\resources\\dk\\sdu\\core\\assets\\PistolsAndPlatformersMap.tmx");
 //        map = loader.load("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/PistolsAndPlatformersMap.tmx");
 //        map = loader.load("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss - loadunload/Core/src/main/resources/dk/sdu/core/assets/PistolsAndPlatformersMap.tmx");
-         map = loader.load("/Users/Arian/Desktop/skole/Objekt/code/PistolsAndPlatformerss/Core/target/classes/dk/sdu/core/assets/PistolsAndPlatformersMap.tmx");
+         map = loader.load( pathToAssets + "PistolsAndPlatformersMap.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 
         batch = new SpriteBatch();
@@ -234,7 +235,7 @@ public class Game implements ApplicationListener {
     }
 
     private Sprites makeSprite(Entity e, float x, float y) {
-        Sprites sprites = new Sprites(new Texture(e.getSprite()), e.getID());
+        Sprites sprites = new Sprites(new Texture(pathToAssets + e.getSprite()), e.getID());
         sprites.setX(x);
         sprites.setY(y);
 
