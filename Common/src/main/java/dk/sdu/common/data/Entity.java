@@ -7,6 +7,7 @@ import java.io.Serializable;
  *
  * @author fatihozcelik
  */
+
 public class Entity implements Serializable {
 
     private final UUID ID = UUID.randomUUID();
@@ -137,9 +138,6 @@ public class Entity implements Serializable {
         this.deltaY = deltaY;
     }
 
-//    public String getID() {
-//        return ID.toString();
-//    }
     public UUID getID() {
         return this.ID;
     }
@@ -231,9 +229,4 @@ public class Entity implements Serializable {
     public void setRadians(float radians) {
         this.radians = radians;
     }
-
-    public boolean getPositionX(EntityType entityType) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

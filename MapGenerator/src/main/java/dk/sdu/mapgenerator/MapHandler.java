@@ -28,15 +28,27 @@ public class MapHandler implements IPluginService {
     int lateralPoint;
     List<Entity> platformList = new ArrayList<>();
 
+    //takes two inputs which control the number of platforms per layer and the number of layers.
     public void generateMap(int numberOfPlatforms, int numberOfLayers, GameData gameData, World world) {
-//        platformList.clear();
+
+        //calculates how many points need to be set (a start and an end for each platform +  a height)
         int NumberOfPointsToPlace = (numberOfPlatforms * 2) - 2;
+
+        //calculates ho far should be between each layer
         int layerDistance = 355 / numberOfLayers - 10;
+
+        //for each layer that needs to be made
         for (int i = 0; i < numberOfLayers; i++) {
+
+            //for each point that needs to be set in each layer
             for (int j = 0; j <= NumberOfPointsToPlace; j++) {
+
+                //sets the first integer in each layer to be the height of the layers
                 if (j == 0) {
                     height = ((layerDistance) * (i + 1) - layerDistance / 7 + newNumber.nextInt(layerDistance / 7)) + 100;
                     platformPlacements[i][j] = height;
+
+                    //otherwise it sets the position of the beginning and end of each platform in the layers
                 } else {
 
                     lateralPoint = (800 / NumberOfPointsToPlace) * (j - 1);
@@ -51,15 +63,13 @@ public class MapHandler implements IPluginService {
                     Entity platform = new Entity(lateralPoint, height, 0, 0, 0, true, 9999999);
                     platform.setHeight(20);
                     platform.setWidth((float) (newNumber.nextInt(4) + 2) * 40);
-                    
+
                     platform.setType(EntityType.MAP);
                     platformList.add(platform);
 
                     world.addEntity(platform);
 
                     platform.setSprite("mapSprites/");
-//                    platform.setSprite("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/mapSprites/");
-//                    platform.setSprite("/Users/Frank Sebastian/Documents/NetBeansProjects/PistolsAndPlatformerss/Core/target/classes/dk/sdu/core/assets/mapSprites/");
                 }
             }
         }
@@ -70,6 +80,7 @@ public class MapHandler implements IPluginService {
     }
 
     @Override
+    //generates the map with 3 layers and 3 platforms per level
     public void start(GameData gameData, World world) {
         generateMap(3, 3, gameData, world);
     }

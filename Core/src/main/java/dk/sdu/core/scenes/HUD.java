@@ -21,10 +21,11 @@ import dk.sdu.core.main.Game;
  *
  * @author fatihozcelik
  */
+
 public class HUD implements Disposable {
 
     public Stage stage;
-    private Viewport viewport;
+    private final Viewport viewport;
 
     private Integer worldTimer;
     private float timeCount;

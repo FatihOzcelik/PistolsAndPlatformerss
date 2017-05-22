@@ -1,6 +1,5 @@
 package dk.sdu.enemyai;
 
-import dk.sdu.common.data.Collision;
 import dk.sdu.common.data.Entity;
 import dk.sdu.common.data.GameData;
 import static dk.sdu.common.data.GameKeys.*;
@@ -9,8 +8,6 @@ import dk.sdu.common.data.Collision;
 import static dk.sdu.common.data.EntityType.ENEMY;
 import static dk.sdu.common.data.EntityType.PLAYER;
 import dk.sdu.common.services.IProcessingService;
-import static java.lang.Math.abs;
-import java.util.Random;
 import org.openide.util.lookup.ServiceProvider;
 import static java.lang.Math.abs;
 
@@ -41,6 +38,10 @@ public class EnemyAIProcessing implements IProcessingService {
                 float dX = entity.getDeltaX();
                 float dY = entity.getDeltaY();
 
+                /**
+                 * Faces the player with a small buffer, such that the enemy
+                 * doesn't constantly change direction upon contact
+                 */
                 for (Entity player : world.getEntities()) {
                     if (player.getType().equals(PLAYER)) {
                         if (entity.getPositionX() < player.getPositionX() - 30) {
@@ -59,20 +60,13 @@ public class EnemyAIProcessing implements IProcessingService {
                     } else {
                         dX = maxSpeed * dt + x;
                     }
-//                    if (entity.isIsHit()) {
-//                        dX = x;
-//                    }
                 } else if (abs(x - dX) / dt > maxSpeed) {
                     dX = x - (acceleration * dt);
                 } else {
                     dX = x - (maxSpeed * dt);
                 }
-//                if (entity.isIsHit()) {
-//                    dX = x;
-//                }
 
                 //gravity
-//            dY = ((dY - y) * -10) * dt;
                 dY += velocityY * dt;      // Apply vertical velocity to X position
                 velocityY += gravity * dt;
 
@@ -90,10 +84,9 @@ public class EnemyAIProcessing implements IProcessingService {
                 }
 
                 /**
-                 * Collision with entities
+                 * Collision with entities reduces health
                  */
                 if (entity.isIsHit()) {
-//                    System.out.println("Enemy is hit!");
                     entity.setHealth(entity.getHealth() - 50);
                     entity.setIsHit(false);
                     if (entity.getHealth() <= 0) {
@@ -101,9 +94,6 @@ public class EnemyAIProcessing implements IProcessingService {
                     }
                 }
 
-                /**
-                 * Collision with map
-                 */
                 //save the local delta position
                 entity.setDeltaX(dX);
                 entity.setDeltaY(dY);

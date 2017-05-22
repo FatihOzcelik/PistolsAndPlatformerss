@@ -16,12 +16,14 @@ import org.openide.util.lookup.ServiceProvider;
  *
  * @author fatihozcelik
  */
+
 @ServiceProvider(service = IProcessingService.class)
 public class CollisionSystem implements IProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
 
+        //compares every entity to every other entity
         for (Entity entity : world.getEntities()) {
             for (Entity otherEntity : world.getEntities()) {
                 if (otherEntity.getType() != entity.getType() && otherEntity != entity && !entity.isIsHit() && testCollision(entity, otherEntity)) {

@@ -8,6 +8,7 @@ import java.util.UUID;
  *
  * @author fatihozcelik
  */
+
 public class Sprites extends Sprite {
 
     private final UUID UUID;

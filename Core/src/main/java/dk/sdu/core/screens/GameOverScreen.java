@@ -22,10 +22,11 @@ import dk.sdu.core.main.Game;
  *
  * @author fatihozcelik
  */
+
 public class GameOverScreen implements Screen {
 
-    private Viewport viewport;
-    private Stage stage;
+    private final Viewport viewport;
+    private final Stage stage;
 
     public GameOverScreen() {
         viewport = new FitViewport(Game.V_WIDTH, Game.V_HEIGHT, new OrthographicCamera());

@@ -10,10 +10,6 @@ package dk.sdu.common.data;
  * @author Arian
  */
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 public class GameData {
 
     private float delta;

@@ -14,6 +14,7 @@ import dk.sdu.common.data.GameKeys;
  *
  * @author fatihozcelik
  */
+
 public class GameInputProcessor extends InputAdapter {
     private final GameData gameData;
 

@@ -8,18 +8,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import dk.sdu.common.data.Entity;
 import dk.sdu.common.data.GameData;
 import dk.sdu.common.data.World;
@@ -56,7 +47,6 @@ public class Game implements ApplicationListener {
     private List<IPluginService> gamePlugins = new CopyOnWriteArrayList<>();
     private TiledMap map;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
-//    private Box2DDebugRenderer b2dr;
     public static final int V_WIDTH = 800;
     public static final int V_HEIGHT = 600;
     private SpriteBatch batch;
@@ -66,6 +56,7 @@ public class Game implements ApplicationListener {
     private boolean isPlayerDead;
 
     @Override
+    //Generates all the basics of the display window
     public void create() {
         cam = new OrthographicCamera(800, 600);
         cam.translate(800 / 2, 600 / 2);
@@ -79,47 +70,22 @@ public class Game implements ApplicationListener {
         result.addLookupListener(lookupListener);
         result.allItems();
 
+        //finds all instances of the IPluginServices and starts them
         for (Lookup.Item<IPluginService> plugin : result.allItems()) {
             plugin.getInstance().start(gameData, world);
         }
 
         TmxMapLoader loader = new TmxMapLoader();
 
-//      map = loader.load("\\Users\\Frank Sebastian\\Documents\\NetBeansProjects\\PistolsAndPlatformerss\\Core\\src\\main\\resources\\dk\\sdu\\core\\assets\\PistolsAndPlatformersMap.tmx");
-//        map = loader.load("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss/Core/src/main/resources/dk/sdu/core/assets/PistolsAndPlatformersMap.tmx");
-//        map = loader.load("/Users/fatihozcelik/NetBeansProjects/PistolsAndPlatformerss - loadunload/Core/src/main/resources/dk/sdu/core/assets/PistolsAndPlatformersMap.tmx");
-         map = loader.load( pathToAssets + "PistolsAndPlatformersMap.tmx");
+        //loads the map from the map file in assets
+        map = loader.load(pathToAssets + "PistolsAndPlatformersMap.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 
         batch = new SpriteBatch();
-
-        // Box2DDebuggin lines     
-//        world = new World(new Vector2(0, 0), true);
-//        b2dr = new Box2DDebugRenderer(); // graphical representaion of fixtures and bodies inside the Box2D world.
-//
-//        BodyDef bDef = new BodyDef();
-//        PolygonShape shape = new PolygonShape();
-//        FixtureDef fDef = new FixtureDef();
-//        Body body;
-//
-//        for (MapObject object : map.getLayers().get(1).getObjects().getByType(RectangleMapObject.class)) {
-//            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-//
-//            bDef.type = BodyDef.BodyType.StaticBody;
-//            bDef.position.set(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);
-//
-//            body = world.createBody(bDef);
-//
-//            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
-//            fDef.shape = shape;
-//            body.createFixture(fDef);
-//
-//        }
         hud = new HUD(batch);
 
         oldValue = world.getEntities().size();
 
-//        gameOverScreen = new GameOverScreen();
         gameOverScreen = new GameOverScreen();
 
     }
@@ -143,15 +109,17 @@ public class Game implements ApplicationListener {
     }
 
     private void update() {
+        //processes all instances of IProcessingService
         for (IProcessingService entityProcessorService : getProcessingServices()) {
             entityProcessorService.process(gameData, world);
         }
 
-//        for (Entity entity : world.getEntities()) {
-//            System.out.println("entityhealth for : " + entity.getType() + ": " + entity.getHealth());
-//        }
-//        System.out.println("world.getEntities.size: " + world.getEntities().size());
-        //Checks if an enemy is removed from the world. If so, 100 is added to the score.
+        /*
+         *defines the size of entities (exept the platforms) to be the same as the sprite size
+         *meaning that all the entities are the same size as they are displayed to be
+         *this way the collision can be calculated with the actual size of entities in the screen
+         *and the look of entities can be changed without messing up the collision size
+         */
         int newValue = world.getEntities().size();
         for (Entity entity : world.getEntities()) {
             if (oldValue > newValue && entity.getType().equals(ENEMY)) {
@@ -159,48 +127,26 @@ public class Game implements ApplicationListener {
                 oldValue = newValue;
             }
 
-            //If the entity has 0 health and it is the player, then the game is over
+            //if the player dies, the game ends
             if (entity.getHealth() < 1 && entity.getType().equals(PLAYER)) {
                 System.out.println("Game Over");
                 isPlayerDead = true; //this will trigger the renderer to draw the gameover screen
             }
         }
 
-        //check the timer, and if it is 0, then the game is over
+        //kills the player if the time runs out
         if (hud.getWorldTimer() == 0) {
-            isPlayerDead = true; //this will trigger the renderer to draw the gameover screen
+            isPlayerDead = true; //this will end the game
         }
 
-//        System.out.println("hud.getWorldTimer: " + hud.getWorldTimer());
-        //        for (Entity entity : world.getEntities()) {
-        //            //Checks if an entity has 0 health and if so, the entity is removed
-        //            if (entity.getHealth() == 0) {
-        //                world.removeEntity(entity);
-        //                if (!entity.getType().equals(BULLET)) {
-        //                    //adds 100 points to the score for each killed entity
-        //                    //(if the killed (removed) entity was not a bullet)
-        //                    hud.addScore(100);
-        //                }
-        //            }
-        //
-        //            //If the entity has 0 health and it is the player, then the game is over
-        //            if (entity.getHealth() == 0 && entity.getType().equals(PLAYER)) {
-        //                System.out.println("Game Over");
-        //                
-        //            }
-        //
-        //        }
-        {
-            for (Entity entity : world.getEntities()) {
-                //This is for updating player health displayed on HUD
-                if (entity.getType().equals(PLAYER)) {
-                    hud.setHealth((int) entity.getHealth());
-                }
+        for (Entity entity : world.getEntities()) {
+            //This is for updating player health displayed on HUD
+            if (entity.getType().equals(PLAYER)) {
+                hud.setHealth((int) entity.getHealth());
             }
         }
 
         hud.update(gameData.getDelta());
-//        world.step(1/60f, 6, 2);
     }
 
     private Collection<? extends IProcessingService> getProcessingServices() {
@@ -220,11 +166,10 @@ public class Game implements ApplicationListener {
         //renders the game map
         tiledMapRenderer.render();
 
-        //renders Box2DDebugLines
-//        b2dr.render(world, cam.combined);
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
 
+        //renderes the game over screen when the game is over (and removes all the entities)
         if (gameOverScreen != null && isPlayerDead) {
             gameOverScreen.render(Gdx.graphics.getDeltaTime());
             removeAllEntities();
@@ -235,10 +180,15 @@ public class Game implements ApplicationListener {
     }
 
     private Sprites makeSprite(Entity e, float x, float y) {
+        /*
+         *sets the sprite positions to be the positions of the entity meaning we draw the sprite
+         *wherever the entity it coresponds to is.
+         */
         Sprites sprites = new Sprites(new Texture(pathToAssets + e.getSprite()), e.getID());
         sprites.setX(x);
         sprites.setY(y);
 
+        //keeps the entity the same size as the sprite, even if the sprite is changed midgame
         if (!e.getType().equals(MAP) && !e.getType().equals(BULLET)) {
             e.setHeight(sprites.getTexture().getHeight());
             e.setWidth(sprites.getTexture().getWidth());
@@ -248,27 +198,39 @@ public class Game implements ApplicationListener {
     }
 
     private void draw() {
-        Sprites sprites = null;
+        Sprites sprites;
         batch.begin();
         Random platformNumb = new Random();
 
+        //iterates over every entity and draws them in their correct position
         for (Entity entity : world.getEntities()) {
+
+            //for the platforms it draws each platform in smaller (40pixel width) parts
             if (entity.getType().equals(MAP)) {
+
+                //first the beginning of the platform is drawn
                 int numbPlatWidth = (int) (entity.getWidth() / 40) - 1;
                 entity.setSprite(entity.getSprite().substring(0, entity.getSprite().lastIndexOf("/") + 1) + "edgeStart.png");
                 sprites = makeSprite(entity, entity.getPositionX(), entity.getPositionY());
                 sprites.draw(batch);
+
+                //depending on the width of the platform, width/40 (pixels) platform parts are drawn
                 for (int i = 1; i < numbPlatWidth; i++) {
                     entity.setSprite(entity.getSprite().substring(0, entity.getSprite().lastIndexOf("/") + 1) + "platform" + i % 4 + ".png");
                     sprites = makeSprite(entity, entity.getPositionX() + (i * 40), entity.getPositionY());
                     sprites.draw(batch);
                 }
+
+                //the platform end is drawn
                 entity.setSprite(entity.getSprite().substring(0, entity.getSprite().lastIndexOf("/") + 1) + "edgeEnd.png");
                 sprites = makeSprite(entity, entity.getPositionX() + numbPlatWidth * 40, entity.getPositionY());
                 sprites.draw(batch);
+
+                //for none platform entities they are simply drawn at their position
             } else {
                 sprites = makeSprite(entity, entity.getPositionX(), entity.getPositionY());
 
+                //sets the sprites to face the same way as the entity is moving
                 if (entity.isDirection()) {
                     sprites.flip(false, false);
                 } else {

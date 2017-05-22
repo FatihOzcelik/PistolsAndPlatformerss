@@ -12,29 +12,34 @@ import java.awt.Rectangle;
  *
  * @author Arian
  */
+
 public class Collision {
 
+    //check the provided interface aginst the map
     public void mapCollision(Entity entity, World world) {
+        //is the entity exiting the left or right side of the screen?
         if (entity.getDeltaX() < 0 || entity.getDeltaX() > 762) {
             entity.setCollisionX(true);
         } else {
             entity.setCollisionX(false);
         }
+        //is the entity going through the ground at the bottom of the screen
         if (entity.getDeltaY() < 80) {
             entity.setCollisionY(true);
         } else {
             entity.setCollisionY(false);
         }
+        //is the entity coliding with the tree in the center of the map
         if (entity.getDeltaX() > 150 && entity.getDeltaX() < 430) {
             if (entity.getDeltaY() > 175 && entity.getDeltaY() < 240) {
                 entity.setCollisionY(true);
                 entity.setCollisionX(true);
             }
         }
+        //is the entity coliding with any of the platforms
         for (Entity otherEntity : world.getEntities()) {
             if (otherEntity.getType().equals(MAP)) {
                 if (testCollision(entity, otherEntity)) {
-//                    System.out.println("BOOOOOOOOOO");
                     entity.setCollisionY(true);
                     entity.setCollisionX(true);
                 }
@@ -56,14 +61,3 @@ public class Collision {
         return isCollision;
     }
 }
-//    World world =  new World();
-//    public void entityCollision (){
-//        for (Entity entity1: world.getEntities()) {
-//            for(Entity entity2: world.getEntities()) {
-//                if(entity2.equals(entity1)){
-//                    
-//                } else {
-//                }
-//            }
-//        }
-//    }

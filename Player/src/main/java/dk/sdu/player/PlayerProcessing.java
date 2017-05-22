@@ -9,7 +9,6 @@ import static dk.sdu.common.data.EntityType.PLAYER;
 import dk.sdu.common.services.IProcessingService;
 import dk.sdu.commonbullet.Bullet;
 import dk.sdu.commonbullet.BulletSPI;
-import static java.lang.Math.abs;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.ServiceProvider;
 import static java.lang.Math.abs;
@@ -49,9 +48,6 @@ public class PlayerProcessing implements IProcessingService {
                     } else {
                         dX = x - (maxSpeed * dt);
                     }
-//                    if (entity.isIsHit()) {
-//                        dX = x - (acceleration * dt);
-//                    }
                 }
 
                 // Walking right
@@ -62,9 +58,6 @@ public class PlayerProcessing implements IProcessingService {
                     } else {
                         dX = maxSpeed * dt + x;
                     }
-//                    if (entity.isIsHit()) {
-//                        dX = acceleration * dt + x;
-//                    }
                 }
 
                 //Shooting                
@@ -80,9 +73,8 @@ public class PlayerProcessing implements IProcessingService {
                 }
 
                 //gravity
-//            dY = ((dY - y) * -10) * dt;
                 dY += velocityY * dt;      // Apply vertical velocity to X position
-                if(!entity.isCollisionY()){
+                if (!entity.isCollisionY()) {
                     velocityY += gravity * dt;
                 }
 
@@ -103,7 +95,6 @@ public class PlayerProcessing implements IProcessingService {
                  * Collision with entities
                  */
                 if (entity.isIsHit()) {
-//                    System.out.println("Player is hit!");
                     entity.setHealth((float) (entity.getHealth() - 0.5));
                     entity.setIsHit(false);
                     if (entity.getHealth() <= 0) {
@@ -111,16 +102,12 @@ public class PlayerProcessing implements IProcessingService {
                     }
                 }
 
-                /**
-                 * Collision with map
-                 */
                 //save the local delta position
                 entity.setDeltaX(dX);
                 entity.setDeltaY(dY);
 
-//                //check if this entity colides with the map
+                //check if this entity colides with the map
                 collisionDetection.mapCollision(entity, world);
-
 
                 // react to x collision by not moving x
                 if (entity.isCollisionX()) {
@@ -145,7 +132,8 @@ public class PlayerProcessing implements IProcessingService {
             }
         }
     }
-
+    
+    //weapon cooldown
     private void weaponCD(GameData gameData) {
         if (CD > 0) {
             CD -= gameData.getDelta();

@@ -7,7 +7,6 @@ package dk.sdu.enemymimic;
 
 import dk.sdu.common.data.Collision;
 import dk.sdu.common.data.Entity;
-import static dk.sdu.common.data.EntityType.ENEMY;
 import static dk.sdu.common.data.EntityType.ENEMYAI;
 import dk.sdu.common.data.GameData;
 import static dk.sdu.common.data.GameKeys.DOWN;
@@ -43,45 +42,14 @@ public class EnemyMimicProcessing implements IProcessingService {
                 float dX = entity.getDeltaX();
                 float dY = entity.getDeltaY();
 
-                
-//                if(Math.random() > 0.99){
-//                    entity.setDirection(!entity.isDirection());
-//                }
-
-
-//                if ((PLAYER)){
-//                    if (abs(x - dX) / dt > maxSpeed) {
-//                        dX = acceleration * dt + x;
-//                    } else {
-//                        dX = maxSpeed * dt + x;
-//                    }
-//                } else {
-//                    if (abs(x - dX) / dt > maxSpeed) {
-//                        dX = x - (acceleration * dt);
-//                    } else {
-//                        dX = x - (maxSpeed * dt);
-//                    }
-//                }
-//                
-//                if (entity.getPositionX(Player)) {
-//                    entity.getPositionX(false);
-//                    if (abs(x - dX) / dt > maxSpeed) {
-//                        dX = x - (acceleration * dt);
-//                    } else {
-//                        dX = x - (maxSpeed * dt);
-//                    }
-//                }
-                
-                //Using the same control settings as the player
+                //Using the same control settings as the player to face the same way
                 if (gameData.getKeys().isDown(LEFT)) {
                     entity.setDirection(false);
                 }
-                //Using the same control settings as the player
+                //Using the same control settings as the player to face the same way
                 if (gameData.getKeys().isDown(RIGHT)) {
                     entity.setDirection(true);
                 }
-                
-
 
                 // Walking right or left
                 if (entity.isDirection()) {
@@ -90,20 +58,13 @@ public class EnemyMimicProcessing implements IProcessingService {
                     } else {
                         dX = maxSpeed * dt + x;
                     }
-//                    if (entity.isIsHit()) {
-//                        dX = x;
-//                    }
                 } else if (abs(x - dX) / dt > maxSpeed) {
                     dX = x - (acceleration * dt);
                 } else {
                     dX = x - (maxSpeed * dt);
                 }
-//                if (entity.isIsHit()) {
-//                    dX = x;
-//                }
 
                 //gravity
-//            dY = ((dY - y) * -10) * dt;
                 dY += velocityY * dt;      // Apply vertical velocity to X position
                 velocityY += gravity * dt;
 
@@ -115,26 +76,22 @@ public class EnemyMimicProcessing implements IProcessingService {
                     }
                 }
 
-                // Duck           
+                // Duck (not implemeted)
                 if (gameData.getKeys().isDown(DOWN)) {
 
                 }
 
                 /**
-                 * Collision with entities
+                 * Collision with entities reduces health
                  */
                 if (entity.isIsHit()) {
-//                    System.out.println("Enemy is hit!");
                     entity.setHealth(entity.getHealth() - 50);
                     entity.setIsHit(false);
                     if (entity.getHealth() <= 0) {
                         world.removeEntity(entity);
                     }
                 }
-
-                /**
-                 * Collision with map
-                 */
+                
                 //save the local delta position
                 entity.setDeltaX(dX);
                 entity.setDeltaY(dY);

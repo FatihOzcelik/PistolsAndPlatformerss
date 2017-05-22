@@ -153,7 +153,6 @@ public final class UpdateHandler {
 
         // restart later
         support.doRestartLater(r);
-        return;
     }
 
     static void handleUninstall(OperationContainer<OperationSupport> cont) throws UpdateHandlerException {
@@ -329,9 +328,6 @@ public final class UpdateHandler {
     static InstallSupport.Installer doVerify(InstallSupport support, InstallSupport.Validator validator) throws OperationException {
 
         InstallSupport.Installer installer = support.doValidate(validator, null); // validates all plugins are correctly downloaded
-        // XXX: use there methods to make sure updates are signed and trusted
-        // installSupport.isSigned(installer, <an update element>);
-        // installSupport.isTrusted(installer, <an update element>);
         return installer;
     }
 

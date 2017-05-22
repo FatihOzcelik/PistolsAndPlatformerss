@@ -9,7 +9,6 @@ import dk.sdu.commonbullet.Bullet;
 import dk.sdu.commonbullet.BulletSPI;
 import org.openide.util.lookup.ServiceProvider;
 import static java.lang.Math.abs;
-import static java.lang.Math.abs;
 
 /**
  *
@@ -22,6 +21,8 @@ public class WeaponProcessing implements IProcessingService, BulletSPI {
 
     @Override
     public void process(GameData gameData, World world) {
+
+        //updates all the bullets in the game
         for (Entity bullet : world.getEntities(Bullet.class)) {
             moveBullet(gameData, bullet);
 
@@ -63,7 +64,6 @@ public class WeaponProcessing implements IProcessingService, BulletSPI {
         }
 
         if (bullet.isIsHit()) {
-//            System.out.println("Bullet is hit!");
             bullet.setExpiration(0);
             bullet.setIsHit(false);
         }
@@ -91,7 +91,6 @@ public class WeaponProcessing implements IProcessingService, BulletSPI {
         bullet.setWidth(30);
         bullet.setHeight(16);
         bullet.setType(BULLET);
-//        bullet.setSprite("/Users/Arian/Desktop/skole/Objekt/code/PistolsAndPlatformerss/Core/target/classes/dk/sdu/core/assets/bullet.png");
         bullet.setSprite("bullet.png");
         bullet.setDeltaX(dx + 15);
         bullet.setDeltaY(dy + 15);
